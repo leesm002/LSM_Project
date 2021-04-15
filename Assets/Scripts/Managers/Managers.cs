@@ -1,0 +1,42 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Managers : MonoBehaviour
+{
+
+    static Managers s_Instance;
+    static Managers GetInstance { get { Init(); return s_Instance; } }
+
+    InputManager inputManager = new InputManager();
+    public static InputManager GetInputManager { get { return GetInstance.inputManager; } }
+
+    ResourceManager resourceManager = new ResourceManager();
+    public static ResourceManager GetResourceManager { get { return GetInstance.resourceManager; } }
+
+    void Start()
+    {
+        Init();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        inputManager.OnUpdate();
+    }
+
+    static void Init()
+    {
+        if (s_Instance == null)
+        {
+            GameObject gameObj = GameObject.Find("@Managers");
+            if (gameObj == null)
+            {
+                gameObj = new GameObject { name = "@Managers" };
+                gameObj.AddComponent<Managers>();
+            }
+            DontDestroyOnLoad(gameObj);
+            s_Instance = gameObj.GetComponent<Managers>();
+        }
+    }
+}
