@@ -14,6 +14,9 @@ public class Managers : MonoBehaviour
     ResourceManager resourceManager = new ResourceManager();
     public static ResourceManager GetResourceManager { get { return GetInstance.resourceManager; } }
 
+    CameraManager cameraManager = new CameraManager();
+    public static CameraManager GetCameraManager { get { return GetInstance.cameraManager; } }
+
     void Start()
     {
         Init();
