@@ -11,11 +11,11 @@ public class ResourceManager
 
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        GameObject gameObj = Load<GameObject>("$Prefabs/{path}");
+        GameObject gameObj = Load<GameObject>($"Prefabs/{path}");
 
         if (gameObj == null)
         {
-            Debug.Log("$There is no Prefabs in {path}");
+            Debug.Log($"There is no Prefabs in {path}");
             return null;
         }
 

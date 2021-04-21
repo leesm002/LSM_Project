@@ -9,6 +9,9 @@ public class InputManager
 
     public void OnUpdate()
     {
-        KeyAction.Invoke();
+        if (KeyAction != null)
+        {
+            KeyAction.Invoke();
+        }
     }
 }

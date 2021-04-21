@@ -14,15 +14,15 @@ public class CameraManager : MonoBehaviour
 	};
 
 	
+	private Vector3 focus;
 	[SerializeField]
-	private Vector3 focus = Vector3.up;
-	[SerializeField]
-	private GameObject focusObj = null;
+	private GameObject focusObj;
 
 	private Vector3 oldPos;
 
 	void setupFocusObject(string name)
 	{
+
 		GameObject obj = this.focusObj = new GameObject(name);
 		//obj.transform.position = this.focus;
 		//obj.transform.LookAt(this.transform.position);

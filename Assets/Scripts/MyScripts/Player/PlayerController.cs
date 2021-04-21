@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    Define.PlayerState PlayerStateType = Define.PlayerState.Idle;
+    Define.PlayerState dump_PlayerStateType = Define.PlayerState.Idle;
+
     float f_speed = 5.0f;
     float f_runSpeed = 7.0f;
     float f_jumpUpSpeed = 2.5f;     //올라갈때 속도
@@ -12,17 +15,6 @@ public class PlayerController : MonoBehaviour
     float f_yPosition;              //점프 전 높이
     bool isJumpUp = false;
     const float f_gravity = 9.8f;
-
-    public enum PlayerState
-    {
-        Idle,
-        Walking,
-        Running,
-        Jumping
-    }
-
-    PlayerState e_playerState = PlayerState.Idle;
-    PlayerState dump_playerState = PlayerState.Idle;
 
     //** 캐릭터 이동 관련 
     private CharacterController controller;
@@ -69,7 +61,13 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
+
+
+
+        if (controller == null)
+        {
+            controller = GetComponent<CharacterController>();
+        }
 
         //** 애니메이션 관련 변수 초기화
         anim = GetComponent<Animator>();
@@ -83,21 +81,21 @@ public class PlayerController : MonoBehaviour
         Managers.GetInputManager.KeyAction -= OnKeyboard;
         Managers.GetInputManager.KeyAction += OnKeyboard;
 
-        if (e_playerState != dump_playerState)
+        if (PlayerStateType != dump_PlayerStateType)
         {
 
-            switch (e_playerState)
+            switch (PlayerStateType)
             {
-                case PlayerState.Idle:
+                case Define.PlayerState.Idle:
                     UpdateIdle();
                     break;
-                case PlayerState.Walking:
+                case Define.PlayerState.Walking:
                     UpdateWalking();
                     break;
-                case PlayerState.Running:
+                case Define.PlayerState.Running:
                     UpdateRunning();
                     break;
-                case PlayerState.Jumping:
+                case Define.PlayerState.Jumping:
                     UpdateJumping();
                     break;
                 default:
@@ -105,7 +103,7 @@ public class PlayerController : MonoBehaviour
                     break;
             }
 
-            dump_playerState = e_playerState;
+            dump_PlayerStateType = PlayerStateType;
         }
 
         //땅에 발을 딛고 있지 않을 때 중력 작용
@@ -116,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
     void OnKeyboard()
     {
-        e_playerState = PlayerState.Idle;
+        PlayerStateType = Define.PlayerState.Idle;
 
         //** Walk 상태
         if (Input.GetKey(KeyCode.W) && ! (Input.GetKey(KeyCode.LeftShift)) )
@@ -124,28 +122,28 @@ public class PlayerController : MonoBehaviour
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
             controller.Move(Vector3.forward * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
-                e_playerState = PlayerState.Walking;
+                PlayerStateType = Define.PlayerState.Walking;
         }
         if (Input.GetKey(KeyCode.S) && !(Input.GetKey(KeyCode.LeftShift)))
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
             controller.Move(Vector3.back * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
-                e_playerState = PlayerState.Walking;
+                PlayerStateType = Define.PlayerState.Walking;
         }
         if (Input.GetKey(KeyCode.A) && !(Input.GetKey(KeyCode.LeftShift)))
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
             controller.Move(Vector3.left * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
-                e_playerState = PlayerState.Walking;
+                PlayerStateType = Define.PlayerState.Walking;
         }
         if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.LeftShift)))
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
             controller.Move(Vector3.right * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
-                e_playerState = PlayerState.Walking;
+                PlayerStateType = Define.PlayerState.Walking;
         }
         //** Run 상태
         if (Input.GetKey(KeyCode.W) && (Input.GetKey(KeyCode.LeftShift)))
@@ -153,39 +151,43 @@ public class PlayerController : MonoBehaviour
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
             controller.Move(Vector3.forward * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
-                e_playerState = PlayerState.Running;
+                PlayerStateType = Define.PlayerState.Running;
         }
         if (Input.GetKey(KeyCode.S) && (Input.GetKey(KeyCode.LeftShift)))
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
             controller.Move(Vector3.back * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
-                e_playerState = PlayerState.Running;
+                PlayerStateType = Define.PlayerState.Running;
         }
         if (Input.GetKey(KeyCode.A) && (Input.GetKey(KeyCode.LeftShift)))
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
             controller.Move(Vector3.left * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
-                e_playerState = PlayerState.Running;
+                PlayerStateType = Define.PlayerState.Running;
         }
         if (Input.GetKey(KeyCode.D) && (Input.GetKey(KeyCode.LeftShift)))
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
             controller.Move(Vector3.right * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
-                e_playerState = PlayerState.Running;
+                PlayerStateType = Define.PlayerState.Running;
         }
 
         //** Jump 상태
         if (Input.GetKey(KeyCode.Space))
         {
             if (!currentState.IsName("Jump"))
-                e_playerState = PlayerState.Jumping;
+                PlayerStateType = Define.PlayerState.Jumping;
         }
 
 
     }
 
+    private void OnDestroy()
+    {
+        Managers.GetInputManager.KeyAction -= OnKeyboard;
+    }
 
 }
