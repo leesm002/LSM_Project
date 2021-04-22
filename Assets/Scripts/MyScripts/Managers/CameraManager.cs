@@ -15,38 +15,31 @@ public class CameraManager : MonoBehaviour
 
 	
 	private Vector3 focus;
-	[SerializeField]
 	private GameObject focusObj;
-
 	private Vector3 oldPos;
 
 	void setupFocusObject(string name)
 	{
-
-		GameObject obj = this.focusObj = new GameObject(name);
-		//obj.transform.position = this.focus;
-		//obj.transform.LookAt(this.transform.position);
+		this.focusObj = new GameObject(name);
 
 		return;
 	}
 
 	void Start()
 	{
+		focusObj = GameObject.Find("Player");
+
 		if (this.focusObj == null)
-			this.setupFocusObject("CameraFocusObject");
+			this.setupFocusObject("Player");
 
 		transform.position = this.focusObj.transform.position;
 		transform.position += new Vector3(0, 1, -2);
 
-		//Transform trans = this.transform;
-		//transform.parent = this.focusObj.transform;
-
-		//trans.LookAt(this.focus + new Vector3(0, 1, 1));
 
 		return;
 	}
 
-	void Update()
+	void LateUpdate()
 	{
 		this.chasePlayer();
 		this.mouseEvent();
@@ -57,7 +50,7 @@ public class CameraManager : MonoBehaviour
 
 	void chasePlayer()
     {
-		
+		transform.LookAt(focusObj.transform.position);
 	}
 
 

@@ -13791,7 +13791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7ce0e247544f446b420f15d0f3ea70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusObj: {fileID: 1738503954}
+  focusObj: {fileID: 0}
 --- !u!81 &1738503956
 AudioListener:
   m_ObjectHideFlags: 0
