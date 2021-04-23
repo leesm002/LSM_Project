@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardBool : MonoBehaviour
+public class KeyboardBool
 {
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
 
-        }
-    }
+
 
     
 }

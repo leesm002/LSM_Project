@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-	const float MinZoom = 0.5f;
+	const float MinZoom = 1.0f;
 	const float MaxZoom = 8.0f;
 
 	enum MouseButtonDown
@@ -17,6 +17,7 @@ public class CameraManager : MonoBehaviour
 	private Vector3 focus;
 	private GameObject focusObj;
 	private Vector3 oldPos;
+	private Vector3 dumpPos;
 
 	void setupFocusObject(string name)
 	{
@@ -32,9 +33,7 @@ public class CameraManager : MonoBehaviour
 		if (this.focusObj == null)
 			this.setupFocusObject("Player");
 
-		transform.position = this.focusObj.transform.position;
-		transform.position += new Vector3(0, 1, -2);
-
+		dumpPos = focusObj.transform.position;
 
 		return;
 	}
@@ -47,20 +46,10 @@ public class CameraManager : MonoBehaviour
 		return;
 	}
 
-
 	void chasePlayer()
     {
 		transform.LookAt(focusObj.transform.position);
 	}
-
-
-
-
-
-
-
-
-
 
 	void mouseEvent()
 	{
@@ -86,7 +75,7 @@ public class CameraManager : MonoBehaviour
 
 		//캐릭터의 위치에서 y값을 +1 조정해서 캐릭터중간을 포커스로 둠
 		this.focus = this.focusObj.transform.position;
-		this.focus.y += 1.0f;
+		this.focus.y += 2.0f;
 
 		if (Input.GetMouseButton((int)MouseButtonDown.MBD_LEFT))
 		{
@@ -95,7 +84,7 @@ public class CameraManager : MonoBehaviour
 		else if (Input.GetMouseButton((int)MouseButtonDown.MBD_RIGHT))
 		{
 			if (diff.magnitude > Vector3.kEpsilon)
-				this.cameraRotate(new Vector3(-diff.y, diff.x, 0.0f));
+				this.cameraRotate(diff);
 		}
 
 		this.oldPos = mousePos;
@@ -118,10 +107,14 @@ public class CameraManager : MonoBehaviour
 		return;
 	}
 
-	public void cameraRotate(Vector3 eulerAngle)
+	public void cameraRotate(Vector3 diff)
 	{
-		Transform focusTrans = this.transform;
-		focusTrans.localEulerAngles = focusTrans.localEulerAngles + eulerAngle;
+		transform.RotateAround(focusObj.transform.position, Vector3.up, diff.x);
+
+
+		//Transform focusTrans = this.transform;
+		//focusTrans.localEulerAngles = focusTrans.localEulerAngles + eulerAngle;
+
 		//this.transform.LookAt(this.focus);
 
 		return;
