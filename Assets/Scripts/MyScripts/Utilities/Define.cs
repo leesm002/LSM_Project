@@ -10,7 +10,9 @@ public class Define
         Login,
         Lobby,
         Tutorial,
-        Erin
+        WorldErin,
+        Shop,
+
     }
 
     public enum PlayerState

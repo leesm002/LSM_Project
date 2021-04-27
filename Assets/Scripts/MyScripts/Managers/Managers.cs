@@ -17,7 +17,7 @@ public class Managers : MonoBehaviour
     CameraManager cameraManager = new CameraManager();
     public static CameraManager GetCameraManager { get { return GetInstance.cameraManager; } }
 
-    void Start()
+    void Awake()
     {
         Init();
     }

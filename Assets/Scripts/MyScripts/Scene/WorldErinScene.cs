@@ -13,7 +13,7 @@ public class WorldErinScene : BaseScene
     {
         base.Init();
 
-        SceneType = Define.Scene.Erin;
+        SceneType = Define.Scene.WorldErin;
 
         GameObject gameObj = Managers.GetResourceManager.Instantiate("MyPrefabs/Player");
 

@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+
     Define.PlayerState PlayerStateType = Define.PlayerState.Idle;
     Define.PlayerState dump_PlayerStateType = Define.PlayerState.Idle;
 
@@ -20,8 +21,7 @@ public class PlayerController : MonoBehaviour
 
     //** 캐릭터 이동 관련 
     private CharacterController controller;
-    private Camera camera;
-    private Vector3 dumpVector;
+    private Quaternion rotCam;
 
     //** 애니메이션 관련
     private Animator anim;
@@ -73,8 +73,6 @@ public class PlayerController : MonoBehaviour
             controller = GetComponent<CharacterController>();
         }
 
-        camera = Camera.main;
-
         //** 애니메이션 관련 변수 초기화
         anim = GetComponent<Animator>();
         currentState = anim.GetCurrentAnimatorStateInfo(0);
@@ -120,72 +118,73 @@ public class PlayerController : MonoBehaviour
 
     void OnKeyboard()
     {
+        //기본 유휴상태
         PlayerStateType = Define.PlayerState.Idle;
 
+        //뛰는지 체크
         if ((Input.GetKey(KeyCode.LeftShift)))
             isRun = true;
         else
             isRun = false;
 
-        dumpVector = controller.transform.position - camera.transform.position; // 카메라가 바라보는 방향벡터
-        dumpVector = dumpVector.normalized;
-        dumpVector.x = 0.0f;
+        //메인 카메라가 바라보는 방향값을 항상 받아옴
+        rotCam = Camera.main.transform.localRotation;
 
         //** Walk 상태
         if (Input.GetKey(KeyCode.W) && !isRun )
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
-            controller.Move(Vector3.forward * Time.deltaTime * f_speed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
+            controller.Move((rotCam * Vector3.forward) * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
                 PlayerStateType = Define.PlayerState.Walking;
         }
         if (Input.GetKey(KeyCode.S) && !isRun )
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
-            controller.Move(Vector3.back * Time.deltaTime * f_speed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.back), 0.2f);
+            controller.Move((rotCam * Vector3.back) * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
                 PlayerStateType = Define.PlayerState.Walking;
         }
         if (Input.GetKey(KeyCode.A) && !isRun )
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
-            controller.Move(Vector3.left * Time.deltaTime * f_speed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.left), 0.2f);
+            controller.Move((rotCam * Vector3.left) * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
                 PlayerStateType = Define.PlayerState.Walking;
         }
         if (Input.GetKey(KeyCode.D) && !isRun )
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
-            controller.Move(Vector3.right * Time.deltaTime * f_speed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.right), 0.2f);
+            controller.Move((rotCam * Vector3.right) * Time.deltaTime * f_speed);
             if (!currentState.IsName("Walk"))
                 PlayerStateType = Define.PlayerState.Walking;
         }
         //** Run 상태
         if (Input.GetKey(KeyCode.W) && isRun )
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
-            controller.Move(Vector3.forward * Time.deltaTime * f_runSpeed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
+            controller.Move((rotCam * Vector3.forward) * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
                 PlayerStateType = Define.PlayerState.Running;
         }
         if (Input.GetKey(KeyCode.S) && isRun )
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
-            controller.Move(Vector3.back * Time.deltaTime * f_runSpeed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.back), 0.2f);
+            controller.Move((rotCam * Vector3.back) * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
                 PlayerStateType = Define.PlayerState.Running;
         }
         if (Input.GetKey(KeyCode.A) && isRun)
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
-            controller.Move(Vector3.left * Time.deltaTime * f_runSpeed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.left), 0.2f);
+            controller.Move((rotCam * Vector3.left) * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
                 PlayerStateType = Define.PlayerState.Running;
         }
         if (Input.GetKey(KeyCode.D) && isRun)
         {
-            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
-            controller.Move(Vector3.right * Time.deltaTime * f_runSpeed);
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.right), 0.2f);
+            controller.Move((rotCam * Vector3.right) * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
                 PlayerStateType = Define.PlayerState.Running;
         }

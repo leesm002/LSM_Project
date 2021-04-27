@@ -35,7 +35,7 @@ public class CameraManager : MonoBehaviour
 
 		dumpPos = focusObj.transform.position;
 
-		return;
+        return;
 	}
 
 	void LateUpdate()
@@ -48,7 +48,16 @@ public class CameraManager : MonoBehaviour
 
 	void chasePlayer()
     {
-		transform.LookAt(focusObj.transform.position);
+		transform.LookAt(focus);
+
+        if (focusObj.transform.position != dumpPos)	//캐릭터가 움직이면
+        {
+			dumpPos -= focusObj.transform.position;
+
+			transform.position -= dumpPos;
+
+			dumpPos = focusObj.transform.position;
+        }
 	}
 
 	void mouseEvent()
@@ -75,7 +84,7 @@ public class CameraManager : MonoBehaviour
 
 		//캐릭터의 위치에서 y값을 +1 조정해서 캐릭터중간을 포커스로 둠
 		this.focus = this.focusObj.transform.position;
-		this.focus.y += 2.0f;
+		this.focus.y += 1.0f;
 
 		if (Input.GetMouseButton((int)MouseButtonDown.MBD_LEFT))
 		{
@@ -111,6 +120,16 @@ public class CameraManager : MonoBehaviour
 	{
 		transform.RotateAround(focusObj.transform.position, Vector3.up, diff.x);
 
+        if (diff.y > 50)
+			transform.RotateAround(focusObj.transform.position, Vector3.forward, diff.y);
+        else if (diff.y < 50)
+			transform.RotateAround(focusObj.transform.position, Vector3.right, diff.y);
+
+
+		//diff.x 값이 양수 = 오른쪽으로 드래그
+		//diff.x 값이 음수 = 왼쪽으로 드래그
+		//diff.y 값이 양수 = 위로 드래그
+		//diff.y 값이 음수 = 아래로 드래그
 
 		//Transform focusTrans = this.transform;
 		//focusTrans.localEulerAngles = focusTrans.localEulerAngles + eulerAngle;
@@ -119,6 +138,5 @@ public class CameraManager : MonoBehaviour
 
 		return;
 	}
-	
 
 }
