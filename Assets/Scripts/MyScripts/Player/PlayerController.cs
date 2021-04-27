@@ -77,13 +77,15 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         currentState = anim.GetCurrentAnimatorStateInfo(0);
         previousState = currentState;
+
+        Managers.GetInputManager.KeyAction -= OnKeyboard;
+        Managers.GetInputManager.KeyAction += OnKeyboard;
+
     }
 
     private void Update()
     {
 
-        Managers.GetInputManager.KeyAction -= OnKeyboard;
-        Managers.GetInputManager.KeyAction += OnKeyboard;
 
         if (PlayerStateType != dump_PlayerStateType)
         {

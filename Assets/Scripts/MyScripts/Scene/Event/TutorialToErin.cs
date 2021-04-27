@@ -9,7 +9,8 @@ public class TutorialToErin : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         SceneManager.UnloadSceneAsync("Tutorial");
-        SceneManager.LoadSceneAsync("WorldErin");
+        SceneManager.LoadScene("WorldErin");
+
     }
 
 

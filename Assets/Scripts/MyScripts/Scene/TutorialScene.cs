@@ -6,7 +6,7 @@ public class TutorialScene : BaseScene
 {
     public override void Clear()
     {
-
+        
     }
 
     protected override void Init()
