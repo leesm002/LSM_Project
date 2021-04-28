@@ -50,7 +50,7 @@ public class CameraManager : MonoBehaviour
     {
 		transform.LookAt(focus);
 
-        if (focusObj.transform.position != dumpPos)	//캐릭터가 움직이면
+        if (focusObj.transform.position != dumpPos)	//캐릭터가 움직이면 따라 움직임
         {
 			dumpPos -= focusObj.transform.position;
 
@@ -112,6 +112,14 @@ public class CameraManager : MonoBehaviour
 
 		if (post.magnitude > MinZoom && post.magnitude < MaxZoom)
 			this.transform.position = this.focus + post;
+
+        if (post.magnitude < MinZoom)		//만약 너무 가까우면 최소값까지 축소
+            while (post.magnitude > MinZoom)
+				this.transform.position = this.focus + (focusToPosition * (1.0f + 0.1f));
+		if (post.magnitude > MaxZoom)       //만약 너무 멀면 최댓값까지 확대
+			while (post.magnitude < MinZoom)
+				this.transform.position = this.focus + (focusToPosition * (1.0f - 0.1f));
+
 
 		return;
 	}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
 
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour
         else
             controller.Move(Vector3.down * Time.deltaTime * f_gravity);
 
-        if (f_yPosition + 2.0 < (controller.transform.position.y) && isJumpUp)
+        if (f_yPosition + 2.0f < (controller.transform.position.y) && isJumpUp)
             isJumpUp = false;
         
 
@@ -129,6 +130,9 @@ public class PlayerController : MonoBehaviour
 
         //메인 카메라가 바라보는 방향값을 항상 받아옴
         rotCam = Camera.main.transform.localRotation;
+        rotCam.z -= Camera.main.transform.localRotation.z;  // freeze z
+        rotCam.x -= Camera.main.transform.localRotation.x;  // freeze x
+
 
         //** Walk 상태
         if (Input.GetKey(KeyCode.W) && !isRun )
