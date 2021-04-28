@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
 
@@ -72,7 +71,6 @@ public class PlayerController : MonoBehaviour
         {
             controller = GetComponent<CharacterController>();
         }
-
         //** 애니메이션 관련 변수 초기화
         anim = GetComponent<Animator>();
         currentState = anim.GetCurrentAnimatorStateInfo(0);

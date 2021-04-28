@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WorldErin.unity
     guid: d2809ab9b90eea7419d8d90d4c505d35
+  - enabled: 1
+    path: Assets/Scenes/Shop.unity
+    guid: fe2370f5b70306746883cb2e879fa49f
   m_configObjects: {}

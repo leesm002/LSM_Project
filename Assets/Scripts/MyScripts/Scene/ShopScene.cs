@@ -15,6 +15,12 @@ public class ShopScene : BaseScene
 
         SceneType = Define.Scene.Shop;
 
+        GameObject gameObj = Managers.GetResourceManager.Instantiate("MyPrefabs/SD_Player");
+
+        gameObj.name = "SD_Player";
+
+        gameObj.transform.position = new Vector3(0, 1, 0);
+
     }
 
 }
