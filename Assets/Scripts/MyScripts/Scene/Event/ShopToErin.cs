@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TutorialToErin : MonoBehaviour
+public class ShopToErin : MonoBehaviour
 {
-
     private void OnTriggerEnter(Collider other)
     {
         Managers.GetMySceneManager.UpdateSceneNum();
-        SceneManager.UnloadSceneAsync("Tutorial");
+        SceneManager.UnloadSceneAsync("Shop");
         Managers.GetMySceneManager.SetSceneNum(Define.Scene.WorldErin);
-        SceneManager.LoadScene("WorldErin");
-
+        SceneManager.LoadSceneAsync("WorldErin");
     }
-
-
-
 }
