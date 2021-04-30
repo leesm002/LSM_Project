@@ -6,7 +6,7 @@ public class ShopScene : BaseScene
 {
     public override void Clear()
     {
-
+        Debug.Log("ShopScene Clear!");
     }
 
     protected override void Init()

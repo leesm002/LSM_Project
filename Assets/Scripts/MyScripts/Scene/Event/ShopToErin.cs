@@ -7,9 +7,7 @@ public class ShopToErin : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Managers.GetMySceneManager.UpdateSceneNum();
-        SceneManager.UnloadSceneAsync("Shop");
-        Managers.GetMySceneManager.SetSceneNum(Define.Scene.WorldErin);
-        SceneManager.LoadSceneAsync("WorldErin");
+        Managers.GetMySceneManager.UnLoadScene(Define.Scene.Shop);
+        Managers.GetMySceneManager.LoadScene(Define.Scene.WorldErin);
     }
 }

@@ -8,10 +8,8 @@ public class TutorialToErin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Managers.GetMySceneManager.UpdateSceneNum();
-        SceneManager.UnloadSceneAsync("Tutorial");
-        Managers.GetMySceneManager.SetSceneNum(Define.Scene.WorldErin);
-        SceneManager.LoadScene("WorldErin");
+        Managers.GetMySceneManager.UnLoadScene(Define.Scene.Tutorial);
+        Managers.GetMySceneManager.LoadScene(Define.Scene.WorldErin);
 
     }
 
