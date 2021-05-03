@@ -124,15 +124,30 @@ public class CameraManager : MonoBehaviour
 		return;
 	}
 
+	Quaternion qt;
 	public void cameraRotate(Vector3 diff)
 	{
 		transform.RotateAround(focusObj.transform.position, Vector3.up, diff.x);
 
-        if (diff.y > 50)
-			transform.RotateAround(focusObj.transform.position, Vector3.forward, diff.y);
-        else if (diff.y < 50)
-			transform.RotateAround(focusObj.transform.position, Vector3.right, diff.y);
+		qt = transform.rotation.normalized;
 
+		transform.RotateAround(focusObj.transform.position, qt.eulerAngles, diff.y);
+
+		//Debug.DrawLine(Vector3.zero, qt.eulerAngles);
+		//transform.RotateAround(회전할 기준 좌표, 회전할 기준 축, 회전할 각도);
+		//transform.RotateAround(focusObj.transform.position, Vector3.zero, -diff.y);
+        
+		/*
+			0.0f < rotation.y && rotation.y < 90.0f			오른쪽앞 방향		↗
+			90.0f < rotation.y && rotation.y < 180.0f		오른쪽뒤 방향		↘
+			0.0f > rotation.y && -90.0f > rotation.y		왼쪽앞 방향		↖
+			-90.0f > rotation.y && -180.0f > rotation.y		왼쪽뒤 방향		↙
+
+			0			앞 방향
+			90			오른쪽 방향
+			180 && -180	뒤 방향
+			-90			왼쪽 방향
+		 */
 
 		//diff.x 값이 양수 = 오른쪽으로 드래그
 		//diff.x 값이 음수 = 왼쪽으로 드래그
