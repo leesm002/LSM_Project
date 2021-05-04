@@ -18,6 +18,7 @@ public class CameraManager : MonoBehaviour
 	private GameObject focusObj;
 	private Vector3 oldPos;
 	private Vector3 dumpPos;
+	private GameObject focusAxis;
 
 	void setupFocusObject(string name)
 	{
@@ -29,10 +30,15 @@ public class CameraManager : MonoBehaviour
 	void Start()
 	{
 		focusObj = GameObject.Find("Player");
+		focusAxis = GameObject.Find("PlayerAxis");
 
 		if (this.focusObj == null)
 			this.setupFocusObject("Player");
 
+		if (this.focusAxis == null)
+			this.setupFocusObject("PlayerAxis");
+
+		//chasePlayer() 함수를 위한 초기화
 		dumpPos = focusObj.transform.position;
 
         return;
@@ -124,16 +130,19 @@ public class CameraManager : MonoBehaviour
 		return;
 	}
 
-	Quaternion qt;
 	public void cameraRotate(Vector3 diff)
 	{
-		transform.RotateAround(focusObj.transform.position, Vector3.up, diff.x);
+		transform.RotateAround(focusAxis.transform.position, Vector3.up, diff.x);
 
-		qt = transform.rotation.normalized;
+		focusAxis.transform.localRotation = Camera.main.transform.localRotation;
 
-		transform.RotateAround(focusObj.transform.position, qt.eulerAngles, diff.y);
+		Debug.Log(Mathf.Clamp(Camera.main.transform.localRotation.x,0.0f,70.0f));
+		
+		//캐릭터를 시작점, 카메라가 바라보는 방향의 오른쪽을 끝점으로 선을 그었을 때 그 선이 축이 된다.
+		Debug.DrawLine(focusAxis.transform.localPosition,focusAxis.transform.localRotation * Vector3.right);
 
-		//Debug.DrawLine(Vector3.zero, qt.eulerAngles);
+		transform.RotateAround(focusAxis.transform.position, focusAxis.transform.localRotation * Vector3.right, -diff.y);
+		
 		//transform.RotateAround(회전할 기준 좌표, 회전할 기준 축, 회전할 각도);
 		//transform.RotateAround(focusObj.transform.position, Vector3.zero, -diff.y);
         
