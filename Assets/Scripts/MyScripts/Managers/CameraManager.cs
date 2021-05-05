@@ -7,17 +7,15 @@ public class CameraManager : MonoBehaviour
 	const float MinZoom = 1.0f;
 	const float MaxZoom = 8.0f;
 
-	enum MouseButtonDown
-	{
-		MBD_LEFT = 0,
-		MBD_RIGHT,
-	};
+	Define.MouseButtonDown mouseButtonDown = Define.MouseButtonDown.MBD_LEFT;
 
-	
 	private Vector3 focus;
 	private GameObject focusObj;
 	private Vector3 oldPos;
 	private Vector3 dumpPos;
+	/// <summary>
+	/// 플레이어의 CameraArm & 축
+	/// </summary>
 	private GameObject focusAxis;
 
 	void setupFocusObject(string name)
@@ -74,8 +72,8 @@ public class CameraManager : MonoBehaviour
 			this.mouseWheelEvent(delta);
 
 		//마우스 클릭 이벤트
-		if (Input.GetMouseButtonDown((int)MouseButtonDown.MBD_LEFT) ||
-			Input.GetMouseButtonDown((int)MouseButtonDown.MBD_RIGHT))
+		if (Input.GetMouseButtonDown((int)Define.MouseButtonDown.MBD_LEFT) ||
+			Input.GetMouseButtonDown((int)Define.MouseButtonDown.MBD_RIGHT))
 			this.oldPos = Input.mousePosition;
 
 		//마우스 드래그 이벤트
@@ -92,11 +90,11 @@ public class CameraManager : MonoBehaviour
 		this.focus = this.focusObj.transform.position;
 		this.focus.y += 1.0f;
 
-		if (Input.GetMouseButton((int)MouseButtonDown.MBD_LEFT))
+		if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT))
 		{
 			
 		}
-		else if (Input.GetMouseButton((int)MouseButtonDown.MBD_RIGHT))
+		else if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT))
 		{
 			if (diff.magnitude > Vector3.kEpsilon)
 				this.cameraRotate(diff);
@@ -136,37 +134,22 @@ public class CameraManager : MonoBehaviour
 
 		focusAxis.transform.localRotation = Camera.main.transform.localRotation;
 
-		Debug.Log(Mathf.Clamp(Camera.main.transform.localRotation.x,0.0f,70.0f));
 		
 		//캐릭터를 시작점, 카메라가 바라보는 방향의 오른쪽을 끝점으로 선을 그었을 때 그 선이 축이 된다.
 		Debug.DrawLine(focusAxis.transform.localPosition,focusAxis.transform.localRotation * Vector3.right);
 
-		transform.RotateAround(focusAxis.transform.position, focusAxis.transform.localRotation * Vector3.right, -diff.y);
-		
-		//transform.RotateAround(회전할 기준 좌표, 회전할 기준 축, 회전할 각도);
-		//transform.RotateAround(focusObj.transform.position, Vector3.zero, -diff.y);
-        
-		/*
-			0.0f < rotation.y && rotation.y < 90.0f			오른쪽앞 방향		↗
-			90.0f < rotation.y && rotation.y < 180.0f		오른쪽뒤 방향		↘
-			0.0f > rotation.y && -90.0f > rotation.y		왼쪽앞 방향		↖
-			-90.0f > rotation.y && -180.0f > rotation.y		왼쪽뒤 방향		↙
-
-			0			앞 방향
-			90			오른쪽 방향
-			180 && -180	뒤 방향
-			-90			왼쪽 방향
-		 */
+        //카메라의 Rotation.x 가 70도 & -70도로 제한되게 함
+        if (Camera.main.transform.localRotation.eulerAngles.x < 70.0f || 290.0f < Camera.main.transform.localRotation.eulerAngles.x)			// -70 ~ 70
+			transform.RotateAround(focusAxis.transform.position, focusAxis.transform.localRotation * Vector3.right, -diff.y);
+        else if (70.0f <= Camera.main.transform.localRotation.eulerAngles.x && Camera.main.transform.localRotation.eulerAngles.x <= 90.0f)		// 70 ~ 90
+			transform.RotateAround(focusAxis.transform.position, focusAxis.transform.localRotation * Vector3.right, -0.2f);
+		else if (270.0f <= Camera.main.transform.localRotation.eulerAngles.x && Camera.main.transform.localRotation.eulerAngles.x <= 290.0f)	// -90 ~ -70
+			transform.RotateAround(focusAxis.transform.position, focusAxis.transform.localRotation * Vector3.right, 0.2f);
 
 		//diff.x 값이 양수 = 오른쪽으로 드래그
 		//diff.x 값이 음수 = 왼쪽으로 드래그
 		//diff.y 값이 양수 = 위로 드래그
 		//diff.y 값이 음수 = 아래로 드래그
-
-		//Transform focusTrans = this.transform;
-		//focusTrans.localEulerAngles = focusTrans.localEulerAngles + eulerAngle;
-
-		//this.transform.LookAt(this.focus);
 
 		return;
 	}

@@ -22,4 +22,10 @@ public class Define
         Running,
         Jumping
     }
+
+    public enum MouseButtonDown
+    {
+        MBD_LEFT = 0,
+        MBD_RIGHT,
+    };
 }
