@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: fae4e1853329f3a4f9f8d50f96cf9638
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: ELAND Choice
+  fontNames:
+  - ELAND Choice
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c492131f970191c4cafa4b94b6f24434, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: ab62707e41b9ce047b9e81b4442ed855
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Binggrae?
+  fontNames:
+  - Binggrae?
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 84ca8316691afa6478cb34ea285b5d3b, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
