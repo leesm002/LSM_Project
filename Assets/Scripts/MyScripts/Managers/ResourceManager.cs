@@ -23,7 +23,7 @@ public class ResourceManager
         return Object.Instantiate<GameObject>(gameObj, parent);
     }
 
-    public void Destory(GameObject gameObj)
+    public void Destroy(GameObject gameObj)
     {
         if (gameObj == null)
             return;

@@ -20,13 +20,14 @@ public class Managers : MonoBehaviour
     MySceneManager mySceneManager = new MySceneManager();
     public static MySceneManager GetMySceneManager { get { return GetInstance.mySceneManager; } }
 
+    UIManager uiManager = new UIManager();
+    public static UIManager GetUIManager { get { return GetInstance.uiManager; } }
 
     void Awake()
     {
         Init();
     }
 
-    // Update is called once per frame
     void Update()
     {
         inputManager.OnUpdate();

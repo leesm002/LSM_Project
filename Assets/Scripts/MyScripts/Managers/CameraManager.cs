@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour
 	const float MinZoom = 1.0f;
 	const float MaxZoom = 8.0f;
 
-	Define.MouseButtonDown mouseButtonDown = Define.MouseButtonDown.MBD_LEFT;
+	//Define.MouseButtonDown mouseButtonDown = Define.MouseButtonDown.MBD_LEFT;
 
 	private Vector3 focus;
 	private GameObject focusObj;

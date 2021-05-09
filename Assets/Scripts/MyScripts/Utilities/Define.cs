@@ -27,5 +27,12 @@ public class Define
     {
         MBD_LEFT = 0,
         MBD_RIGHT,
-    };
+    }
+
+    public enum UIEvent
+    {
+        Click,
+        Drag,
+    }
+    
 }
