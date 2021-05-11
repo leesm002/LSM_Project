@@ -43,7 +43,7 @@ public class SD_PlayerController : MonoBehaviour
     }
     void UpdatePosing()
     {
-            anim.SetInteger("Condition", 3);
+        anim.SetInteger("Condition", 3);
     }
 
     void groundCharacter()
