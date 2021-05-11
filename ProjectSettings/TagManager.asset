@@ -7,6 +7,7 @@ TagManager:
   - LeftHand
   - RightHand
   - TwoHand
+  - Monster
   layers:
   - Default
   - TransparentFX
