@@ -696,7 +696,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7537495437875386073}
-  - component: {fileID: 606751711622821771}
   m_Layer: 0
   m_Name: PlayerAxis
   m_TagString: Untagged
@@ -718,24 +717,6 @@ Transform:
   m_Father: {fileID: 1158147046633965549}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &606751711622821771
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296955693912225508}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.3
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1638695953671785796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,6 +1067,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1158147046633965549}
   - component: {fileID: 5112355573789416855}
+  - component: {fileID: 4271445896867886097}
+  - component: {fileID: 3740390651131935250}
   m_Layer: 0
   m_Name: SD_Player_Combat
   m_TagString: Untagged
@@ -1131,6 +1114,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!143 &4271445896867886097
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970676916029054295}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &3740390651131935250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970676916029054295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0784e37a58496a04ebae74288a4b8b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2148135402934577328
 GameObject:
   m_ObjectHideFlags: 0

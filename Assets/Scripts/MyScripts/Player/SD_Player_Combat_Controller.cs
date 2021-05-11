@@ -4,13 +4,90 @@ using UnityEngine;
 
 public class SD_Player_Combat_Controller : MonoBehaviour
 {
+    Define.PlayerState PlayerStateType = Define.PlayerState.Idle;
+    Define.PlayerState dump_PlayerStateType = Define.PlayerState.Idle;
+
+
+    //캐릭터 이동 관련
+    float f_speed = 5.0f;
     private CharacterController controller;
 
-    float f_speed = 5.0f;
-
+    //중력 관련
     const float f_gravity = 9.8f;
 
+    //마우스 클릭 관련
+    private Vector3 oldPos;
 
+    //애니메이션 관련
     private Animator anim;
     private AnimatorStateInfo currentState;
+    private AnimatorStateInfo previousState;
+
+    private void Start()
+    {
+        if (controller == null)
+        {
+            controller = GetComponent<CharacterController>();
+        }
+        //** 애니메이션 관련 변수 초기화
+        anim = GetComponent<Animator>();
+        currentState = anim.GetCurrentAnimatorStateInfo(0);
+        previousState = currentState;
+
+        Managers.GetInputManager.KeyAction -= OnKeyboard;
+        Managers.GetInputManager.KeyAction += OnKeyboard;
+    }
+
+    private void LateUpdate()
+    {
+        this.mouseEvent();
+    }
+
+    void OnKeyboard()
+    {
+        if (!anim.GetBool("Walk"))
+            anim.SetTrigger("Idle");
+        
+        //** Walk 상태
+        if (Input.GetKey(KeyCode.A))
+        {
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
+            controller.Move(Vector3.left * Time.deltaTime * f_speed);
+            anim.SetBool("Walk", true);
+        }
+        else
+            anim.SetBool("Walk", false);
+        if (Input.GetKey(KeyCode.D))
+        {
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
+            controller.Move(Vector3.right * Time.deltaTime * f_speed);
+            anim.SetBool("Walk", true);
+        }
+        else
+            anim.SetBool("Walk", false);
+
+    }
+
+    void mouseEvent()
+    {
+        //마우스 클릭 이벤트
+        if (Input.GetMouseButtonDown((int)Define.MouseButtonDown.MBD_LEFT))
+        {
+            this.LeftMouseButtonDown();
+        }
+        if(Input.GetMouseButtonDown((int)Define.MouseButtonDown.MBD_RIGHT))
+        {
+            this.RightMouseButtonDown();
+        }
+    }
+
+    void LeftMouseButtonDown()
+    {
+        
+    }
+
+    void RightMouseButtonDown()
+    {
+
+    }
 }
