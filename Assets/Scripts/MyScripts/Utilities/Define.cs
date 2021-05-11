@@ -20,7 +20,8 @@ public class Define
         Idle,
         Walking,
         Running,
-        Jumping
+        Jumping,
+        Posing
     }
 
     public enum MouseButtonDown
