@@ -76,11 +76,11 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     void LeftMouseButtonDown()
     {
-        
+        anim.SetTrigger("PrickAttack");
     }
 
     void RightMouseButtonDown()
     {
-
+        anim.SetTrigger("ContinuousAttack");
     }
 }
