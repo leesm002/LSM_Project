@@ -64,23 +64,20 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     void mouseEvent()
     {
         //마우스 클릭 이벤트
-        if (Input.GetMouseButtonDown((int)Define.MouseButtonDown.MBD_LEFT))
-        {
-            this.LeftMouseButtonDown();
-        }
-        if(Input.GetMouseButtonDown((int)Define.MouseButtonDown.MBD_RIGHT))
-        {
-            this.RightMouseButtonDown();
-        }
+        if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT)) { this.LeftMouseButton(); }
+        else { anim.SetBool("PrickAttack", false); }
+        if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT)) { this.RightMouseButton(); }
+        else { anim.SetBool("ContinuousAttack", false); }
+        
     }
 
-    void LeftMouseButtonDown()
+    void LeftMouseButton()
     {
-        anim.SetTrigger("PrickAttack");
+        anim.SetBool("PrickAttack", true);
     }
 
-    void RightMouseButtonDown()
+    void RightMouseButton()
     {
-        anim.SetTrigger("ContinuousAttack");
+        anim.SetBool("ContinuousAttack", true);
     }
 }
