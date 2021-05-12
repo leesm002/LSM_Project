@@ -8,6 +8,7 @@ TagManager:
   - RightHand
   - TwoHand
   - Monster
+  - NPC
   layers:
   - Default
   - TransparentFX

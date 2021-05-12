@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6101914, g: 0.5538976, b: 0.64997715, a: 1}
+  m_IndirectSpecularColor: {r: 0.61020744, g: 0.553921, b: 0.6499692, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -958,7 +958,7 @@ PrefabInstance:
     - target: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb,
         type: 3}
       propertyPath: m_Name
-      value: DogPolyart
+      value: Dog
       objectReference: {fileID: 0}
     - target: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb,
         type: 3}
