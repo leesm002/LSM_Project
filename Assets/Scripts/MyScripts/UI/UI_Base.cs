@@ -7,16 +7,22 @@ using UnityEngine.UI;
 
 public abstract class UI_Base : MonoBehaviour
 {
-	protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
+	protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();	//딕셔너리<자료형, Enum의 내용물들>
 
 	public abstract void Init();
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="type"></param>
 	protected void Bind<T>(Type type) where T : UnityEngine.Object
 	{
-		string[] names = Enum.GetNames(type);
-		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
-		_objects.Add(typeof(T), objects);
+		string[] names = Enum.GetNames(type);									// Enum의 내용물들을 string[] 배열에 저장
+		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];	// 타입명의 길이만큼 objects에 동적할당
+		_objects.Add(typeof(T), objects);										// 타입 - 자료 맵을 Dictionary에 추가
 
+		//자식을 objects에 추가하는 작업
 		for (int i = 0; i < names.Length; i++)
 		{
 			if (typeof(T) == typeof(GameObject))
