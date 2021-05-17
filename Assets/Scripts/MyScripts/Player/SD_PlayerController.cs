@@ -11,7 +11,6 @@ public class SD_PlayerController : MonoBehaviour
 
     float f_speed = 5.0f;
     float f_runSpeed = 7.0f;
-    float f_jumpUpSpeed = 2.5f;     //올라갈때 속도
 
     float f_yPosition;              //점프 전 높이
     bool isSpaced = false;
