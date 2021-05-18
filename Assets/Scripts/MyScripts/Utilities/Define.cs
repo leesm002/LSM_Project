@@ -32,7 +32,8 @@ public class Define
         PrickAttack,
         ContinuousAttack,
         Hitosasi,
-        Dizzy
+        Dizzy,
+        Slide
 
     }
 

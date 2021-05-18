@@ -38,34 +38,14 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     }
 
 
-    void UpdateIdle()
-    {
-        anim.SetInteger("Condition", 0);
-    }
-    void UpdateWalking()
-    {
-        anim.SetInteger("Condition", 1);
-    }
-    void UpdateRunning()
-    {
-        anim.SetInteger("Condition", 2);
-    }
-    void UpdatePrickAttack()
-    {
-        anim.SetInteger("Condition", 3);
-    }
-    void UpdateContinuousAttack()
-    {
-        anim.SetInteger("Condition", 4);
-    }
-    void UpdateHitosasi()
-    {
-        anim.SetInteger("Condition", 5);
-    }
-    void UpdateDizzy()
-    {
-        anim.SetInteger("Condition", 6);
-    }
+    void UpdateIdle() { anim.SetInteger("Condition", 0); }
+    void UpdateWalking() { anim.SetInteger("Condition", 1); }
+    void UpdateRunning() { anim.SetInteger("Condition", 2); }
+    void UpdatePrickAttack() { anim.SetInteger("Condition", 3); }
+    void UpdateContinuousAttack() { anim.SetInteger("Condition", 4); }
+    void UpdateHitosasi() { anim.SetInteger("Condition", 5); }
+    void UpdateDizzy() { anim.SetInteger("Condition", 6); }
+    void UpdateSlide() { anim.SetInteger("Condition", 7); }
 
 
     void groundCharacter()
@@ -101,6 +81,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
                     break;
                 case Define.PlayerCombatState.Dizzy:
                     UpdateDizzy();
+                    break;
+                case Define.PlayerCombatState.Slide:
+                    UpdateSlide();
                     break;
                 default:
                     UpdateIdle();
@@ -193,6 +176,12 @@ public class SD_Player_Combat_Controller : MonoBehaviour
             controller.Move((rotCam * Vector3.right) * Time.deltaTime * f_runSpeed);
             if (!currentState.IsName("Run"))
                 PlayerStateType = Define.PlayerCombatState.Running;
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (!currentState.IsName("Slide"))
+                PlayerStateType = Define.PlayerCombatState.Slide;
         }
 
     }

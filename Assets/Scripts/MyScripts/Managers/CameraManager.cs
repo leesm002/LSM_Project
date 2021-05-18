@@ -41,12 +41,11 @@ public class CameraManager : MonoBehaviour
 
         return;
 	}
-
-	void LateUpdate()
+    
+    void LateUpdate()
 	{
 		this.chasePlayer();
 		this.mouseEvent();
-
 		return;
 	}
 
@@ -130,6 +129,22 @@ public class CameraManager : MonoBehaviour
 
 	protected void cameraRotate(Vector3 diff)
 	{
+		if (diff.y < -5.0f || 5.0f < diff.y)
+        {
+			if (diff.y < -5.0f)
+				diff.y = -5.0f;
+			if (5.0f < diff.y)
+				diff.y = 5.0f;
+        }
+
+        if (diff.x < -5.0f || 5.0f < diff.x)
+        {
+            if (diff.x < -5.0f)
+				diff.x = -5.0f;
+            if (5.0f < diff.x)
+				diff.x = 5.0f;
+        }
+
 		transform.RotateAround(focusAxis.transform.position, Vector3.up, diff.x);
 
 		focusAxis.transform.localRotation = Camera.main.transform.localRotation;

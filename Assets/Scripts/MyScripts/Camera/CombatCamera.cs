@@ -21,7 +21,6 @@ public class CombatCamera : CameraManager
 		Cursor.lockState = CursorLockMode.Confined;
     }
 
-
 	override protected void mouseDragEvent(Vector3 mousePos)
 	{
 		Vector3 diff = mousePos - oldPos;
