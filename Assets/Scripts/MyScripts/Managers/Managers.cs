@@ -14,17 +14,14 @@ public class Managers : MonoBehaviour
     ResourceManager resourceManager = new ResourceManager();
     public static ResourceManager GetResourceManager { get { return GetInstance.resourceManager; } }
 
-    CameraManager cameraManager = new CameraManager();
-    public static CameraManager GetCameraManager { get { return GetInstance.cameraManager; } }
-
     MySceneManager mySceneManager = new MySceneManager();
     public static MySceneManager GetMySceneManager { get { return GetInstance.mySceneManager; } }
 
     UIManager uiManager = new UIManager();
     public static UIManager GetUIManager { get { return GetInstance.uiManager; } }
 
-    MonsterManager monsterManager = new MonsterManager();
-    public static MonsterManager GetMonsterManager { get { return GetInstance.monsterManager; } }
+    DataManager dataManager = new DataManager();
+    public static DataManager GetDataManager { get { return GetInstance.dataManager; } }
 
     void Awake()
     {
@@ -48,6 +45,13 @@ public class Managers : MonoBehaviour
             }
             DontDestroyOnLoad(gameObj);
             s_Instance = gameObj.GetComponent<Managers>();
+
+            // 각 매니저의 Init 함수 실행부
+            s_Instance.dataManager.Init();
+            //s_Instance.poolManager.Init();
+            //s_Instance.soundManager.Init();
+            
+            
         }
     }
 }

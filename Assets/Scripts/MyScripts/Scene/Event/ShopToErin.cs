@@ -7,7 +7,7 @@ public class ShopToErin : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Managers.GetMySceneManager.UnLoadScene(Define.Scene.Shop);
         Managers.GetMySceneManager.LoadScene(Define.Scene.WorldErin);
+        //Managers.GetMySceneManager.UnLoadScene(Define.Scene.Shop);
     }
 }

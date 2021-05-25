@@ -10,6 +10,8 @@ public class MySceneManager
 
     public void LoadScene(Define.Scene type) { SceneManager.LoadSceneAsync(GetSceneName(type)); }
 
+    public void ActiveScene(Define.Scene type) { SceneManager.SetActiveScene(SceneManager.GetSceneByName(GetSceneName(type))); }
+
     string GetSceneName(Define.Scene type)
     {
         string name = System.Enum.GetName(typeof(Define.Scene), type);

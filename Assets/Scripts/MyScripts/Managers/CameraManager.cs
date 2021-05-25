@@ -44,9 +44,12 @@ public class CameraManager : MonoBehaviour
         return;
 	}
     
+	void Update()
+    {
+		focusAxis.transform.localRotation = Camera.main.transform.localRotation;
+    }
     void LateUpdate()
 	{
-		focusAxis.transform.localRotation = Camera.main.transform.localRotation;
 
 		this.cameraCorrection();
 		this.chasePlayer();
