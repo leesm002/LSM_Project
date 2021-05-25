@@ -23,6 +23,9 @@ public class Managers : MonoBehaviour
     UIManager uiManager = new UIManager();
     public static UIManager GetUIManager { get { return GetInstance.uiManager; } }
 
+    MonsterManager monsterManager = new MonsterManager();
+    public static MonsterManager GetMonsterManager { get { return GetInstance.monsterManager; } }
+
     void Awake()
     {
         Init();

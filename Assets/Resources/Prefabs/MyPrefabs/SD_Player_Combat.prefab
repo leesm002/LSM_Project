@@ -3158,6 +3158,18 @@ Transform:
   m_Father: {fileID: 3352434412189649496}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2199275484430100471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819511098882684927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604bff2710f2e7840a246b43b47cb1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6877472249004674314
 GameObject:
   m_ObjectHideFlags: 0
@@ -5297,7 +5309,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 123080, guid: ef692f86dcc854a7aba0ac610620cb15, type: 3}
       propertyPath: m_Name
-      value: Sword
+      value: TwoHandSword
       objectReference: {fileID: 0}
     - target: {fileID: 123080, guid: ef692f86dcc854a7aba0ac610620cb15, type: 3}
       propertyPath: m_TagString
@@ -5364,6 +5376,12 @@ PrefabInstance:
 --- !u!4 &6819511098882617155 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 456820, guid: ef692f86dcc854a7aba0ac610620cb15,
+    type: 3}
+  m_PrefabInstance: {fileID: 6819511098882758455}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6819511098882684927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 123080, guid: ef692f86dcc854a7aba0ac610620cb15,
     type: 3}
   m_PrefabInstance: {fileID: 6819511098882758455}
   m_PrefabAsset: {fileID: 0}
