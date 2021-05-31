@@ -9,8 +9,6 @@ public class HP_BarController : MonoBehaviour
     void Start()
     {
         this.sdPlayer = GameObject.FindGameObjectWithTag("Player");
-        Debug.Log(sdPlayer);
-
 
     }
 

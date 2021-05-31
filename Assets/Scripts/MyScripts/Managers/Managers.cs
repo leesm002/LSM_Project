@@ -6,7 +6,7 @@ public class Managers : MonoBehaviour
 {
 
     static Managers s_Instance;
-    static Managers GetInstance { get { Init(); return s_Instance; } }
+    public static Managers GetInstance { get { Init(); return s_Instance; } }
 
     InputManager inputManager = new InputManager();
     public static InputManager GetInputManager { get { return GetInstance.inputManager; } }
@@ -54,4 +54,5 @@ public class Managers : MonoBehaviour
             
         }
     }
+    
 }

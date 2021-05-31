@@ -205,7 +205,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Managers.GetInputManager.KeyAction -= OnKeyboard;
+        if (Managers.GetInstance != null)
+            Managers.GetInputManager.KeyAction -= OnKeyboard;
     }
 
 }

@@ -12,6 +12,7 @@ public class Define
         Tutorial,
         WorldErin,
         Shop,
+        Combat
 
     }
 

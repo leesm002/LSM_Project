@@ -34,7 +34,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         previousState = currentState;
 
         Managers.GetInputManager.KeyAction -= OnKeyboard;
+        Managers.GetInputManager.KeyAction -= mouseEvent;
         Managers.GetInputManager.KeyAction += OnKeyboard;
+        Managers.GetInputManager.KeyAction += mouseEvent;
     }
 
 
@@ -58,6 +60,7 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     {
         if (PlayerStateType != dump_PlayerStateType)
         {
+            Debug.Log(anim.GetInteger("Condition"));
             //anim.SetInteger("Condition", (int)PlayerStateType);
             switch (PlayerStateType)
             {
@@ -95,11 +98,6 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
         //땅에 발을 딛고 있지 않을 때 중력 작용
         groundCharacter();
-    }
-
-    private void LateUpdate()
-    {
-        this.mouseEvent();
     }
 
     void OnKeyboard()
@@ -196,19 +194,23 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     void LeftMouseButton()
     {
-        if (!currentState.IsName("PrickAttack"))
+        if (PlayerStateType != Define.PlayerCombatState.PrickAttack)
             PlayerStateType = Define.PlayerCombatState.PrickAttack;
     }
 
     void RightMouseButton()
     {
-        if (!currentState.IsName("ContinuousAttack"))
+        if (PlayerStateType != Define.PlayerCombatState.ContinuousAttack)
             PlayerStateType = Define.PlayerCombatState.ContinuousAttack;
     }
 
     private void OnDestroy()
     {
-        Managers.GetInputManager.KeyAction -= OnKeyboard;
+        if(Managers.GetInstance != null)
+        {
+            Managers.GetInputManager.KeyAction -= OnKeyboard;
+            Managers.GetInputManager.KeyAction -= mouseEvent;
+        }
     }
 
 }
