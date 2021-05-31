@@ -205,8 +205,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (Managers.GetInstance != null)
-            Managers.GetInputManager.KeyAction -= OnKeyboard;
+        Debug.Log("PlayerController에서 Destory 실행됨");
+        Managers.GetInputManager.KeyAction -= OnKeyboard;
     }
 
 }

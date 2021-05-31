@@ -21,4 +21,10 @@ public class InputManager
             KeyAction.Invoke();
         }
     }
+
+    public void OnDestroy()
+    {
+        KeyAction = null;
+    }
+
 }

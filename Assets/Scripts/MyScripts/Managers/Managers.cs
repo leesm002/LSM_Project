@@ -44,6 +44,7 @@ public class Managers : MonoBehaviour
                 gameObj.AddComponent<Managers>();
             }
             DontDestroyOnLoad(gameObj);
+
             s_Instance = gameObj.GetComponent<Managers>();
 
             // 각 매니저의 Init 함수 실행부
@@ -54,5 +55,10 @@ public class Managers : MonoBehaviour
             
         }
     }
-    
+
+    private void OnDestroy()
+    {
+        inputManager.OnDestroy();
+    }
+
 }
