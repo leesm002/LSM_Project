@@ -7,8 +7,11 @@ public class ShopUIOpenEvent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject UIManager = Managers.GetUIManager.Root;
         Debug.Log("Collider Trigger");
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 }

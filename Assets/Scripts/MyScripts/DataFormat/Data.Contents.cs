@@ -19,6 +19,10 @@ public class StatData : ILoader<int, Stat>
 {
     public List<Stat> stats = new List<Stat>();
 
+    /// <summary>
+    /// Key가 int형, Value가 Stat형인 Dictionary를 만들어 Stat에 있는 변수들 (level, hp, attack) 을 추가하여 반환
+    /// </summary>
+    /// <returns></returns>
     public Dictionary<int, Stat> MakeDict()
     {
         Dictionary<int, Stat> dict = new Dictionary<int, Stat>();
