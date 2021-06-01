@@ -9,7 +9,7 @@ public interface ILoader<Key, Value>
     Dictionary<Key, Value> MakeDict();
 }
 
-public class DataManager 
+public class DataManager
 {
     public Dictionary<int, Stat> StatDict { get; private set; } = new Dictionary<int, Stat>();
 

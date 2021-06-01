@@ -206,9 +206,11 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("SD_Player_Combat_Controller에서 Destory 실행됨");
-        Managers.GetInputManager.KeyAction -= OnKeyboard;
-        Managers.GetInputManager.KeyAction -= mouseEvent;
+        if (GameObject.Find("@Managers"))
+        {
+            Managers.GetInputManager.KeyAction -= OnKeyboard;
+            Managers.GetInputManager.KeyAction -= mouseEvent;
+        }
         
     }
     

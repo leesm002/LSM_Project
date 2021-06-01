@@ -8,7 +8,6 @@ public class InputManager
 {
     public Action KeyAction = null;
 
-
     public void OnUpdate()
     {
         /*
@@ -20,11 +19,6 @@ public class InputManager
         {
             KeyAction.Invoke();
         }
-    }
-
-    public void OnDestroy()
-    {
-        KeyAction = null;
     }
 
 }

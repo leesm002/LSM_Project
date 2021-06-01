@@ -190,8 +190,8 @@ public class SD_PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("SD_PlayerController에서 Destory 실행됨");
-        Managers.GetInputManager.KeyAction -= OnKeyboard;
+        if (GameObject.Find("@Managers"))
+            Managers.GetInputManager.KeyAction -= OnKeyboard;
     }
 
 }

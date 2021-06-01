@@ -56,9 +56,4 @@ public class Managers : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        inputManager.OnDestroy();
-    }
-
 }
