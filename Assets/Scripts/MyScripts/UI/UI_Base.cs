@@ -13,19 +13,19 @@ public abstract class UI_Base : MonoBehaviour
 
 	protected void Bind<T>(Type type) where T : UnityEngine.Object
 	{
-		string[] names = Enum.GetNames(type);									// type의 값의 이름을 string[] 배열에 저장
+		string[] names = Enum.GetNames(type);														// type의 값의 이름을 string[] 배열에 저장
 		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];	// 타입명의 길이만큼 objects에 동적할당
-		_objects.Add(typeof(T), objects);										// 타입 - 자료 맵을 Dictionary에 추가
+		_objects.Add(typeof(T), objects);																	// 타입 - 자료 맵을 Dictionary에 추가
 
 		//자식을 objects에 추가하는 작업
 		for (int i = 0; i < names.Length; i++)
 		{
-			if (typeof(T) == typeof(GameObject))								// Bind<GameObject> 일 때,
+			if (typeof(T) == typeof(GameObject))														// Bind<GameObject> 일 때,
 				objects[i] = Util.FindChild(gameObject, names[i], true);
-			else                                                                // GameObject타입이 아닐 때,
+			else																												// GameObject타입이 아닐 때,
 				objects[i] = Util.FindChild<T>(gameObject, names[i], true);		
 
-			if (objects[i] == null)												// 해당하는 값이 없을 때,
+			if (objects[i] == null)																					// 해당하는 값이 없을 때,
 				Debug.Log($"Failed to bind({names[i]})");
 		}
 	}
