@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Button : UI_Popup
+public class ShopperEntryUI : UI_Popup
 {
     enum Buttons
     {
@@ -13,7 +12,6 @@ public class UI_Button : UI_Popup
         SellButton,
         ExitButton
     }
-
     enum Texts
     {
         ShopperEntryText,
@@ -32,21 +30,19 @@ public class UI_Button : UI_Popup
     public override void Init()
     {
         base.Init();
+        Bind<Button>(typeof(Buttons));
+        Bind<Text>(typeof(Texts));
+        //Bind<Image>(typeof(Images));
 
-		Bind<Button>(typeof(Buttons));
-		Bind<Text>(typeof(Texts));
-		//Bind<Image>(typeof(Images));
+        GetButton((int)Buttons.ExitButton).gameObject.BindEvent(OnButtonClicked);
 
-		GetButton((int)Buttons.ExitButton).gameObject.BindEvent(OnButtonClicked);
-
-		GameObject go = GetButton((int)Buttons.ExitButton).gameObject;
-		BindEvent(go, (PointerEventData data) => { GameObject.Find("ShopperEntryUI").SetActive(false); }, Define.UIEvent.Click);
-	}
+        GameObject go = GetButton((int)Buttons.ExitButton).gameObject;
+        BindEvent(go, (PointerEventData data) => { Managers.GetUIManager.ClosePopupUI(this); }, Define.UIEvent.Click);
+    }
 
 
     public void OnButtonClicked(PointerEventData data)
     {
         Debug.Log("클릭 이벤트 발생!");
     }
-
 }
