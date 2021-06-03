@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShopperEntryUI : UI_Popup
+public class ShopperBuyAndSellUI : UI_Popup
 {
     enum Buttons
     {
@@ -14,12 +14,13 @@ public class ShopperEntryUI : UI_Popup
     }
     enum Texts
     {
-        ShopperEntryText,
     }
 
     enum Panels
     {
-        ButtonsPanel,
+        BuyAndSellUIPanel,
+        PlayerItemsPanel,
+        NPCItemsPanel,
     }
 
     private void Start()
@@ -31,7 +32,7 @@ public class ShopperEntryUI : UI_Popup
     {
         base.Init();
         Bind<Button>(typeof(Buttons));
-        Bind<Text>(typeof(Texts));
+        //Bind<Text>(typeof(Texts));
         //Bind<Image>(typeof(Images));
 
         GetButton((int)Buttons.ExitButton).gameObject.BindEvent(OnButtonClicked);
