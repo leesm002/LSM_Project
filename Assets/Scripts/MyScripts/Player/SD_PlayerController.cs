@@ -3,31 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class SD_PlayerController : MonoBehaviour
+public class SD_PlayerController : PlayerContol
 {
-
-    Define.PlayerState PlayerStateType = Define.PlayerState.Idle;
-    Define.PlayerState dump_PlayerStateType = Define.PlayerState.Idle;
-
-    float f_speed = 5.0f;
-    float f_runSpeed = 7.0f;
-
-    float f_yPosition;              //점프 전 높이
-    bool isSpaced = false;
-    bool isRun = false;
-
-    const float f_gravity = 9.8f;
-
-    //** 캐릭터 이동 관련 
-    private CharacterController controller;
-    private Quaternion rotCam;
-
-    //** 애니메이션 관련
-    private Animator anim;
-    private AnimatorStateInfo currentState;
-    private AnimatorStateInfo previousState;
-
-
     void UpdateIdle()
     {
         anim.SetInteger("Condition", 0);
@@ -64,6 +41,7 @@ public class SD_PlayerController : MonoBehaviour
 
         Managers.GetInputManager.KeyAction -= OnKeyboard;
         Managers.GetInputManager.KeyAction += OnKeyboard;
+        base.Init();
 
     }
 

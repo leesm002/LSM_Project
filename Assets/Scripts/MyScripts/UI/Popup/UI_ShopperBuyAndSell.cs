@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShopperBuyAndSellUI : UI_Popup
+public class UI_ShopperBuyAndSell : UI_Popup
 {
     enum Buttons
     {

@@ -8,7 +8,7 @@ public class ShopUIOpenEvent : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collider Trigger");
-        Managers.GetUIManager.ShowPopupUI<ShopperBuyAndSellUI>("ShopperBuyAndSellUI");
+        Managers.GetUIManager.ShowPopupUI<UI_ShopperBuyAndSell>("UI_ShopperBuyAndSell");
     }
 
     private void OnTriggerExit(Collider other)
