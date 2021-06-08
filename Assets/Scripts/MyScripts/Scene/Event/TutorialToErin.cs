@@ -8,6 +8,7 @@ public class TutorialToErin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Managers.GetUIManager.CloseAllPopupUI();
         Managers.GetMySceneManager.LoadScene(Define.Scene.WorldErin);
         //Managers.GetMySceneManager.UnLoadScene(Define.Scene.Tutorial);
 

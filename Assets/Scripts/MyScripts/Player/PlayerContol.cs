@@ -13,7 +13,8 @@ public class PlayerContol : MonoBehaviour
 
     protected bool isRun = false;
 
-    private bool isOpenEquipUI = false;
+    private UI_Equipment UI_Equ;
+    private UI_Inventory UI_Inv;
 
     protected const float f_gravity = 9.8f;
 
@@ -26,7 +27,7 @@ public class PlayerContol : MonoBehaviour
     protected AnimatorStateInfo currentState;
     protected AnimatorStateInfo previousState;
 
-
+    
     protected void Init()
     {
         Managers.GetInputManager.KeyAction -= UI_Key;
@@ -37,17 +38,20 @@ public class PlayerContol : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (isOpenEquipUI == false)
-            {
-                Managers.GetUIManager.ShowPopupUI<UI_Equipment>("EquipUI");
-                isOpenEquipUI = true;
-            }
+            
+            if (UI_Equ == null)
+                UI_Equ = Managers.GetUIManager.ShowPopupUI<UI_Equipment>("EquipUI");
             else
-            {
-                Managers.GetUIManager.CloseAllPopupUI();
-                isOpenEquipUI = false;
-            }
+                Managers.GetUIManager.ClosePopupUI(UI_Equ);
 
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (UI_Inv == null)
+                UI_Inv = Managers.GetUIManager.ShowPopupUI<UI_Inventory>("InventoryUI");
+            else
+                Managers.GetUIManager.ClosePopupUI(UI_Inv);
         }
     }
 }

@@ -7,6 +7,7 @@ public class ErinToShop : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
+        Managers.GetUIManager.CloseAllPopupUI();
         Managers.GetMySceneManager.LoadScene(Define.Scene.Shop);
         //Managers.GetMySceneManager.UnLoadScene(Define.Scene.WorldErin);
     }

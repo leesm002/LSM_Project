@@ -5,8 +5,10 @@ using UnityEngine;
 public class UIManager
 {
     int _order = 10;
+    private int Icount = 0;
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+    Stack<UI_Popup> _popupStackDump = new Stack<UI_Popup>();
     UI_Scene _sceneUI = null;
 
     public GameObject Root
@@ -77,17 +79,26 @@ public class UIManager
 		return popup;
     }
 
+
     public void ClosePopupUI(UI_Popup popup)
     {
 		if (_popupStack.Count == 0)
 			return;
 
-        if (_popupStack.Peek() != popup)
+        if (_popupStack.Peek() != popup)    // 스택 가장 위에 원하는 Popup창이 있지 않을 때
         {
-            Debug.Log("Close Popup Failed!");
+            Icount = 0;
+            foreach (UI_Popup Ppp in _popupStack)   // 스택에서 원하는 Popup창이 있는 위치를 찾음
+            {
+                if (Ppp != popup)
+                    Icount++;                       // 위에 쌓인 스택의 갯수를 카운트
+                else
+                    break;                          // 찾으면 반복문 끝내기
+            }
+            ClosePopupUI(Icount);                   // 위에 쌓인 스택의 갯수를 넘겨줌
             return;
         }
-
+                                            // 스택 가장 위에 원하는 Popup창이 있을 때 그 창을 닫음
         ClosePopupUI();
     }
 
@@ -102,9 +113,36 @@ public class UIManager
         _order--;
     }
 
+    public void ClosePopupUI(int icount)
+    {
+
+        for (int i = 0; i < icount; i++) {
+            UI_Popup dumpPop = _popupStack.Pop();                   // 지우기를 원하는 Popup창 위에 쌓인 스택들을 _popupStackDump에 저장해둠
+            Debug.Log(dumpPop);
+            _popupStackDump.Push(dumpPop);
+            dumpPop = null;
+            _order--; 
+        }
+        
+        UI_Popup popup = _popupStack.Pop();                         // 지우기를 원하는 Popup창을 스택에서 꺼내서 파괴
+        Managers.GetResourceManager.Destroy(popup.gameObject);
+        popup = null;
+        _order--;
+
+        for (int i = 0; i < icount; i++)                            // _popupStack 스택을 되돌려놓음
+        {
+            _popupStack.Push(_popupStackDump.Pop());
+            _order++;
+        }
+        _popupStackDump.Clear();
+
+    }
+
     public void CloseAllPopupUI()
     {
         while (_popupStack.Count > 0)
             ClosePopupUI();
+
+        _popupStack.Clear();
     }
 }
