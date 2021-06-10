@@ -189,7 +189,11 @@ public class PlayerController : PlayerContol
     private void OnDestroy()
     {
         if (GameObject.Find("@Managers"))
+        {
+            Debug.Log("파괴됨");
             Managers.GetInputManager.KeyAction -= OnKeyboard;
+            DestroyControl();
+        }
 
         return;
     }

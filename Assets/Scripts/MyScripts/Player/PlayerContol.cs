@@ -32,17 +32,22 @@ public class PlayerContol : MonoBehaviour
     {
         Managers.GetInputManager.KeyAction -= UI_Key;
         Managers.GetInputManager.KeyAction += UI_Key;
+
     }
 
     private void UI_Key()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            
             if (UI_Equ == null)
+            {
+                Debug.Log("오잉");
                 UI_Equ = Managers.GetUIManager.ShowPopupUI<UI_Equipment>("EquipUI");
-            else
+            }
+            else 
+            { 
                 Managers.GetUIManager.ClosePopupUI(UI_Equ);
+            }
 
         }
 
@@ -53,5 +58,19 @@ public class PlayerContol : MonoBehaviour
             else
                 Managers.GetUIManager.ClosePopupUI(UI_Inv);
         }
+    }
+
+    private void OnDestroy()
+    {
+        Managers.GetUIManager.CloseAllPopupUI();
+        Managers.GetInputManager.KeyAction -= UI_Key;
+    }
+
+    protected void DestroyControl()
+    {
+        Managers.GetUIManager.CloseAllPopupUI();
+        Managers.GetInputManager.KeyAction -= UI_Key;
+
+        return;
     }
 }

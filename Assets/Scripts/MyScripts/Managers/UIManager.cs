@@ -91,6 +91,7 @@ public class UIManager
             for (int i = 0; i < Icount; i++)
             {
                 UI_Popup dumpPop = _popupStack.Pop();
+                _order--;
 
                 if (dumpPop != popup)               // 원하는 Popup창이 아닐때
                 {
@@ -106,13 +107,17 @@ public class UIManager
                     for (int o = 0; o < IcountDump; o++)
                     {
                         _popupStack.Push(_popupStackDump.Pop());
+                        _order++;
                     }
                 }
             }
             return;
         }
-                                                    // 스택 가장 위에 원하는 Popup창이 있을 때 그 창을 닫음
-        ClosePopupUI();
+        else
+        {
+            ClosePopupUI();                 // 스택 가장 위에 원하는 Popup창이 있을 때 그 창을 닫음
+        }
+                                                    
     }
 
     public void ClosePopupUI()
@@ -124,15 +129,16 @@ public class UIManager
         Managers.GetResourceManager.Destroy(popup.gameObject);
         popup = null;
         _order--;
+        return;
     }
 
     public void CloseAllPopupUI()
     {
         while (_popupStack.Count > 0)
+        {
             ClosePopupUI();
+        }
 
-        _popupStack.Clear();
-        _popupStackDump.Clear();
-        Icount = 0;
+        return;
     }
 }
