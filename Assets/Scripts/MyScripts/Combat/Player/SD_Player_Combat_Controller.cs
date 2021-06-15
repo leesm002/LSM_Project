@@ -28,6 +28,10 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         if (controller == null)
             controller = GetComponent<CharacterController>();
 
+        //_stat = gameObject.GetComponent<PlayerStat>();
+
+        Managers.GetUIManager.MakeWorldSpaceUI<HP_BarController>(transform, "HP_Bar");
+
         //** 애니메이션 관련 변수 초기화
         anim = GetComponent<Animator>();
         currentState = anim.GetCurrentAnimatorStateInfo(0);
@@ -195,13 +199,19 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     void LeftMouseButton()
     {
         if (PlayerStateType != Define.PlayerCombatState.PrickAttack)
+        {
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
             PlayerStateType = Define.PlayerCombatState.PrickAttack;
+        }
     }
 
     void RightMouseButton()
     {
         if (PlayerStateType != Define.PlayerCombatState.ContinuousAttack)
+        {
+            controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
             PlayerStateType = Define.PlayerCombatState.ContinuousAttack;
+        }
     }
 
     private void OnDestroy()
