@@ -64,7 +64,6 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     {
         if (PlayerStateType != dump_PlayerStateType)
         {
-            Debug.Log(anim.GetInteger("Condition"));
             //anim.SetInteger("Condition", (int)PlayerStateType);
             switch (PlayerStateType)
             {

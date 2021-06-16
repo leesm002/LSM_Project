@@ -13,7 +13,6 @@ public class Define
         WorldErin,
         Shop,
         Combat
-
     }
 
     public enum PlayerState

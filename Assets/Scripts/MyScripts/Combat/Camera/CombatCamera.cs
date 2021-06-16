@@ -10,15 +10,23 @@ public class CombatCamera : CameraManager
 
 	float mouseRotateSpeed = 5.0f;
 
-	void Start()
+    private void Awake()
     {
-        focusObj = GameObject.Find("SD_Player_Combat");
+		focusObj = GameObject.FindWithTag("Player");
 		focusAxis = GameObject.Find("PlayerAxis");
 
 		if (focusObj == null)
             setupFocusObject("SD_Player_Combat");
 		if (this.focusAxis == null)
 			this.setupFocusObject("PlayerAxis");
+        
+    }
+
+    void Start()
+    {
+
+		//카메라 첫 위치 초기화
+		transform.position = focusObj.transform.position + new Vector3(0,1,-2);
 
 		//chasePlayer() 함수를 위한 초기화
 		dumpPos = focusObj.transform.position;
