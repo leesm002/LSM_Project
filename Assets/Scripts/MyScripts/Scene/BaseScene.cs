@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public abstract class BaseScene : MonoBehaviour
 {
@@ -19,6 +18,7 @@ public abstract class BaseScene : MonoBehaviour
 
     protected virtual void Init()
     {
+        
     }
 
     public abstract void Clear();

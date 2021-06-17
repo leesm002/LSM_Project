@@ -18,6 +18,7 @@ public class TutorialScene : BaseScene
         GameObject gameObj = Managers.GetResourceManager.Instantiate("MyPrefabs/Player");
 
         gameObj.name = "Player";
+
         gameObj.transform.position = new Vector3(0, 1, 0);
         
     }
