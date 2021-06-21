@@ -7,6 +7,8 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     Define.PlayerCombatState PlayerStateType = Define.PlayerCombatState.Idle;
     Define.PlayerCombatState dump_PlayerStateType = Define.PlayerCombatState.Idle;
 
+    PlayerStat _stat;
+
     //캐릭터 이동 관련
     float f_speed = 5.0f;
     float f_runSpeed = 7.0f;
@@ -28,8 +30,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         if (controller == null)
             controller = GetComponent<CharacterController>();
 
-        //_stat = gameObject.GetComponent<PlayerStat>();
+        _stat = gameObject.GetComponent<PlayerStat>();
 
+        
         Managers.GetUIManager.MakeWorldSpaceUI<HP_BarController>(transform, "HP_Bar");
 
         //** 애니메이션 관련 변수 초기화
@@ -64,7 +67,6 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     {
         if (PlayerStateType != dump_PlayerStateType)
         {
-            Debug.Log(anim.GetInteger("Condition"));
             //anim.SetInteger("Condition", (int)PlayerStateType);
             switch (PlayerStateType)
             {

@@ -163,7 +163,6 @@ public class CameraManager : MonoBehaviour
 
 	protected void cameraCorrection()
     {
-		focusAxis.transform.localRotation = Camera.main.transform.localRotation;
 
 		if (70.0f <= Camera.main.transform.localRotation.eulerAngles.x && Camera.main.transform.localRotation.eulerAngles.x <= 90.0f)       // 70 ~ 90	(위로 너무 올라감)
 			transform.RotateAround(focusAxis.transform.position, focusAxis.transform.localRotation * Vector3.right, -0.4f);
