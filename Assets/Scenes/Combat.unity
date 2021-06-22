@@ -520,7 +520,7 @@ MonoBehaviour:
   _maxHp: 0
   _attack: 0
   _defense: 0
-  _speed: 0
+  _moveSpeed: 0
   _exp: 0
   _gold: 0
 --- !u!1001 &398210722
@@ -1023,7 +1023,7 @@ MonoBehaviour:
   _maxHp: 0
   _attack: 0
   _defense: 0
-  _speed: 0
+  _moveSpeed: 0
 --- !u!4 &1449532927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2066896392038131574, guid: 45288819fde2143449a96207b14db0bb,

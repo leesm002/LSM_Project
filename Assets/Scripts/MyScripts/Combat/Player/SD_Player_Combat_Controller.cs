@@ -67,7 +67,6 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     {
         if (PlayerStateType != dump_PlayerStateType)
         {
-            //anim.SetInteger("Condition", (int)PlayerStateType);
             switch (PlayerStateType)
             {
                 case Define.PlayerCombatState.Idle:

@@ -41,7 +41,6 @@ public class PlayerContol : MonoBehaviour
         {
             if (UI_Equ == null)
             {
-                Debug.Log("오잉");
                 UI_Equ = Managers.GetUIManager.ShowPopupUI<UI_Equipment>("EquipUI");
             }
             else 
