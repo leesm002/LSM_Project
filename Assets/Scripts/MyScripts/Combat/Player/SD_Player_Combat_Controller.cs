@@ -224,5 +224,4 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         }
         
     }
-    
 }
