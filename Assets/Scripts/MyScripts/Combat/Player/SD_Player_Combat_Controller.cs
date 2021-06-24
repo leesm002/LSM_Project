@@ -24,14 +24,13 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     private Animator anim;
     private AnimatorStateInfo currentState;
     private AnimatorStateInfo previousState;
-
+    
     private void Start()
     {
         if (controller == null)
             controller = GetComponent<CharacterController>();
 
         _stat = gameObject.GetComponent<PlayerStat>();
-
         
         Managers.GetUIManager.MakeWorldSpaceUI<HP_BarController>(transform, "HP_Bar");
 
