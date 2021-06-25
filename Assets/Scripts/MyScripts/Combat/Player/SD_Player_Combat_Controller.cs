@@ -223,4 +223,50 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         }
         
     }
+
+
+    GameObject testObj;
+    public void AttackEnemyEvent()
+    {
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("RightHand");
+
+        foreach (var item in obj)
+        {
+            if (item.activeInHierarchy)
+            {
+                Debug.Log("활성화 됨");
+            }
+        }
+
+        obj = GameObject.FindGameObjectsWithTag("TwoHand");
+
+        foreach (var item in obj)
+        {
+            if (item.activeInHierarchy)
+            {
+                testObj = item;
+
+                Collider[] collider = Physics.OverlapBox(item.transform.position, item.transform.localScale, new Quaternion(0.3f,0.3f,0.3f,0.3f));
+                foreach (Collider col in collider)
+                {
+                    if (col.tag == "Monster")
+                    {
+                        //TODO ** 몬스터의 스탯을 불러오기
+                        Debug.Log(col.transform.parent);
+
+                        //TODO ** 몬스터가 맞았을 때 몬스터 HP스탯 감소
+                    }
+                }
+
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        if (testObj != null)
+            Gizmos.DrawWireCube(testObj.transform.position, testObj.transform.localScale);
+    }
 }
+
