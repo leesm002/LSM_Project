@@ -22,6 +22,7 @@ public class DataManager
    public void Init()
     {
         StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
+
         MobStatDict = LoadJson<Data.MobStat, int, Data.MobStat>("MobStatData").MakeDict();
     }
 
