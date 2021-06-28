@@ -8,6 +8,8 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     Define.PlayerCombatState dump_PlayerStateType = Define.PlayerCombatState.Idle;
 
     PlayerStat _stat;
+    GameObject[] monsters;
+    Dictionary<int, Data.Stat> mobStatData;
 
     //캐릭터 이동 관련
     float f_speed = 5.0f;
@@ -16,7 +18,6 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     bool isRun = false;
     const float f_gravity = 9.8f;
-
 
     private Quaternion rotCam;
 
@@ -31,7 +32,12 @@ public class SD_Player_Combat_Controller : MonoBehaviour
             controller = GetComponent<CharacterController>();
 
         _stat = gameObject.GetComponent<PlayerStat>();
-        
+
+        //몬스터 태그를 달고있는 모든 오브젝트를 가져옴
+        monsters = GameObject.FindGameObjectsWithTag("Monster");
+
+        mobStatData = Managers.GetDataManager.MobStatDict;
+
         Managers.GetUIManager.MakeWorldSpaceUI<HP_BarController>(transform, "HP_Bar");
 
         //** 애니메이션 관련 변수 초기화
@@ -251,10 +257,8 @@ public class SD_Player_Combat_Controller : MonoBehaviour
                 {
                     if (col.tag == "Monster")
                     {
-                        //TODO ** 몬스터의 스탯을 불러오기
-                        Debug.Log(col.transform.parent);
-
-                        //TODO ** 몬스터가 맞았을 때 몬스터 HP스탯 감소
+                        
+                       //monsterCol.Hp -= Mathf.Max(0, _stat.Attack - monsterCol.Defense);
                     }
                 }
 
