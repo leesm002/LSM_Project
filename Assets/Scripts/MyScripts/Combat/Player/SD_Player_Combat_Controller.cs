@@ -36,8 +36,6 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         //몬스터 태그를 달고있는 모든 오브젝트를 가져옴
         monsters = GameObject.FindGameObjectsWithTag("Monster");
 
-        mobStatData = Managers.GetDataManager.MobStatDict;
-
         Managers.GetUIManager.MakeWorldSpaceUI<HP_BarController>(transform, "HP_Bar");
 
         //** 애니메이션 관련 변수 초기화
@@ -257,8 +255,11 @@ public class SD_Player_Combat_Controller : MonoBehaviour
                 {
                     if (col.tag == "Monster")
                     {
-                        
-                       //monsterCol.Hp -= Mathf.Max(0, _stat.Attack - monsterCol.Defense);
+                        Stat mobStat = col.GetComponentInChildren<Stat>();
+
+                        //최소 데미지 1
+                        mobStat.Hp -= Mathf.Max(1, _stat.Attack - mobStat.Defense);
+
                     }
                 }
 

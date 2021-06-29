@@ -25,7 +25,12 @@ public class Stat : MonoBehaviour
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 
 
-    private void Start()
+    private void Awake()
+    {
+        Init();
+    }
+
+    protected void Init()
     {
         _level = 1;
         _hp = 100;

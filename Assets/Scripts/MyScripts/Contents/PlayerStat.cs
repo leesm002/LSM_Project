@@ -12,8 +12,9 @@ public class PlayerStat : Stat
     public int Exp { get { return _exp; } set { _exp = value; } }
     public int Gold { get { return _gold; } set { _gold = value; } }
 
-    private void Start()
+    private void Awake()
     {
+        base.Init();
         _exp = 0;
         _gold = 0;
     }
