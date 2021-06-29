@@ -7,25 +7,25 @@ public class Stat : MonoBehaviour
     [SerializeField]
     int _level;
     [SerializeField]
-    int _hp;
+    float _hp;
     [SerializeField]
-    int _maxHp;
+    float _maxHp;
     [SerializeField]
-    int _attack;
+    float _attack;
     [SerializeField]
-    int _defense;
+    float _defense;
     [SerializeField]
     float _moveSpeed;
 
     public int Level { get { return _level; } set { _level = value; } }
-    public int Hp { get { return _hp; } set { _hp = value; } }
-    public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
-    public int Attack { get { return _attack; } set { _attack = value; } }
-    public int Defense { get { return _defense; } set { _defense = value; } }
+    public float Hp { get { return _hp; } set { _hp = value; } }
+    public float MaxHp { get { return _maxHp; } set { _maxHp = value; } }
+    public float Attack { get { return _attack; } set { _attack = value; } }
+    public float Defense { get { return _defense; } set { _defense = value; } }
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }

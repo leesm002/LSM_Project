@@ -8,14 +8,15 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     Define.PlayerCombatState dump_PlayerStateType = Define.PlayerCombatState.Idle;
 
     PlayerStat _stat;
-    GameObject[] monsters;
-    Dictionary<int, Data.Stat> mobStatData;
+    Stack<Stat> monsterStats = new Stack<Stat>();
 
     //캐릭터 이동 관련
     float f_speed = 5.0f;
     float f_runSpeed = 7.0f;
     private CharacterController controller;
-
+    bool isOnAttack = false;
+    bool isOnLeftClicked = false;
+    bool isOnRightClicked = false;
     bool isRun = false;
     const float f_gravity = 9.8f;
 
@@ -32,10 +33,7 @@ public class SD_Player_Combat_Controller : MonoBehaviour
             controller = GetComponent<CharacterController>();
 
         _stat = gameObject.GetComponent<PlayerStat>();
-
-        //몬스터 태그를 달고있는 모든 오브젝트를 가져옴
-        monsters = GameObject.FindGameObjectsWithTag("Monster");
-
+        
         Managers.GetUIManager.MakeWorldSpaceUI<HP_BarController>(transform, "HP_Bar");
 
         //** 애니메이션 관련 변수 초기화
@@ -108,11 +106,16 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         groundCharacter();
     }
 
+    #region KeyboardEvents
     void OnKeyboard()
     {
-
         //기본 유휴상태
         PlayerStateType = Define.PlayerCombatState.Idle;
+
+        if (isOnAttack)
+        {
+            return;
+        }
 
         //뛰는지 체크
         if ((Input.GetKey(KeyCode.LeftShift)))
@@ -126,6 +129,7 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         rotCam.x -= Camera.main.transform.localRotation.x;  // freeze x
 
         //** Walk 상태
+        #region WalkState
         if (Input.GetKey(KeyCode.W) && !isRun)
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
@@ -154,7 +158,10 @@ public class SD_Player_Combat_Controller : MonoBehaviour
             if (!currentState.IsName("Walk"))
                 PlayerStateType = Define.PlayerCombatState.Walking;
         }
+        #endregion
+
         //** Run 상태
+        #region RunState
         if (Input.GetKey(KeyCode.W) && isRun)
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
@@ -183,6 +190,7 @@ public class SD_Player_Combat_Controller : MonoBehaviour
             if (!currentState.IsName("Run"))
                 PlayerStateType = Define.PlayerCombatState.Running;
         }
+        #endregion
 
         if (Input.GetKey(KeyCode.Space))
         {
@@ -191,30 +199,59 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         }
 
     }
+    #endregion
 
+    #region MouseEvents
     void mouseEvent()
     {
+
         //마우스 클릭 이벤트
-        if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT)) { this.LeftMouseButton(); }
-        if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT)) { this.RightMouseButton(); }
+        if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT) &&
+            Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT))
+        {
+            if (isOnLeftClicked)
+                this.LeftMouseButton();
+            if (isOnRightClicked)
+                this.RightMouseButton();
+
+            Debug.Log("양쪽");
+        }
+        else if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT)) { this.LeftMouseButton(); Debug.Log("왼쪽"); }
+        else if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT)) { this.RightMouseButton(); Debug.Log("오른쪽"); }
+
+        //아무 입력도 없을 때
+        if (!Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT) &&
+            !Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT))
+        {
+            isOnAttack = false;
+            isOnLeftClicked = false;
+            isOnRightClicked = false;
+
+            return;
+        }
         
     }
 
     void LeftMouseButton()
     {
+        isOnLeftClicked = true;
+
         if (PlayerStateType != Define.PlayerCombatState.PrickAttack)
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
             PlayerStateType = Define.PlayerCombatState.PrickAttack;
+            isOnAttack = true;
         }
     }
 
     void RightMouseButton()
     {
+        isOnRightClicked = true;
         if (PlayerStateType != Define.PlayerCombatState.ContinuousAttack)
         {
             controller.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotCam * Vector3.forward), 0.2f);
             PlayerStateType = Define.PlayerCombatState.ContinuousAttack;
+            isOnAttack = true;
         }
     }
 
@@ -227,10 +264,11 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         }
         
     }
+    #endregion
 
 
-    GameObject testObj;
-    public void AttackEnemyEvent()
+    #region AttackEnemyEvent
+    public void NormalAttackEnemyEvent()
     {
         GameObject[] obj = GameObject.FindGameObjectsWithTag("RightHand");
 
@@ -248,7 +286,52 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         {
             if (item.activeInHierarchy)
             {
-                testObj = item;
+
+                Collider[] collider = Physics.OverlapBox(item.transform.position, item.transform.localScale, new Quaternion(0.3f, 0.3f, 0.3f, 0.3f));
+                foreach (Collider col in collider)
+                {
+                    if (col.tag == "Monster")
+                    {
+                        Stat mobStat = col.GetComponentInChildren<Stat>();
+                        //최소 데미지 1
+                        mobStat.Hp -= Mathf.Max(1, _stat.Attack - mobStat.Defense);
+
+                        monsterStats.Push(mobStat);
+                    }
+                }
+
+            }
+        }
+    }
+
+    // 2번째 타격 이후 보정
+    public void NormalAttackCorrectionEvent()
+    {
+        foreach (var item in monsterStats)
+        {
+            item.Hp -= Mathf.Max(1, _stat.Attack - item.Defense);
+        }
+    }
+
+
+    public void SmashAttackEnemyEvent()
+    {
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("RightHand");
+
+        foreach (var item in obj)
+        {
+            if (item.activeInHierarchy)
+            {
+                Debug.Log("활성화 됨");
+            }
+        }
+
+        obj = GameObject.FindGameObjectsWithTag("TwoHand");
+
+        foreach (var item in obj)
+        {
+            if (item.activeInHierarchy)
+            {
 
                 Collider[] collider = Physics.OverlapBox(item.transform.position, item.transform.localScale, new Quaternion(0.3f,0.3f,0.3f,0.3f));
                 foreach (Collider col in collider)
@@ -258,8 +341,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
                         Stat mobStat = col.GetComponentInChildren<Stat>();
 
                         //최소 데미지 1
-                        mobStat.Hp -= Mathf.Max(1, _stat.Attack - mobStat.Defense);
+                        mobStat.Hp -= Mathf.Max(1, (_stat.Attack * 1.5f) - mobStat.Defense);
 
+                        monsterStats.Push(mobStat);
                     }
                 }
 
@@ -267,11 +351,21 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    // 2번째 타격 이후 보정
+    public void SmashAttackCorrectionEvent()
     {
-        Gizmos.color = Color.blue;
-        if (testObj != null)
-            Gizmos.DrawWireCube(testObj.transform.position, testObj.transform.localScale);
+        foreach (var item in monsterStats)
+        {
+            item.Hp -= Mathf.Max(1, (_stat.Attack * 1.5f) - item.Defense);
+        }
     }
+
+    // 보정 종료시 이벤트
+    public void CorrectionClearEvent()
+    {
+        monsterStats.Clear();
+    }
+    #endregion
+
 }
 
