@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class SD_Player_Combat_Controller : MonoBehaviour
 {
-    Define.PlayerCombatState PlayerStateType = Define.PlayerCombatState.Idle;
-    Define.PlayerCombatState dump_PlayerStateType = Define.PlayerCombatState.Idle;
+    private Define.PlayerCombatState PlayerStateType = Define.PlayerCombatState.Idle;
+    private Define.PlayerCombatState dump_PlayerStateType = Define.PlayerCombatState.Idle;
 
-    PlayerStat _stat;
-    Stack<Stat> monsterStats = new Stack<Stat>();
+    private PlayerStat _stat;
+    private Stack<Stat> monsterStats = new Stack<Stat>();
 
     //캐릭터 이동 관련
-    float f_speed = 5.0f;
-    float f_runSpeed = 7.0f;
+    private float f_speed = 5.0f;
+    private float f_runSpeed = 7.0f;
     private CharacterController controller;
-    bool isOnAttack = false;
-    bool isOnLeftClicked = false;
-    bool isOnRightClicked = false;
-    bool isRun = false;
+    private bool isOnAttack = false;
+    private bool isOnLeftClicked = false;
+    private bool isOnRightClicked = false;
+    private bool isRun = false;
     const float f_gravity = 9.8f;
 
     private Quaternion rotCam;
@@ -214,10 +214,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
             if (isOnRightClicked)
                 this.RightMouseButton();
 
-            Debug.Log("양쪽");
         }
-        else if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT)) { this.LeftMouseButton(); Debug.Log("왼쪽"); }
-        else if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT)) { this.RightMouseButton(); Debug.Log("오른쪽"); }
+        else if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT)) { this.LeftMouseButton(); }
+        else if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_RIGHT)) { this.RightMouseButton(); }
 
         //아무 입력도 없을 때
         if (!Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT) &&
@@ -307,10 +306,12 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     // 2번째 타격 이후 보정
     public void NormalAttackCorrectionEvent()
     {
+        
         foreach (var item in monsterStats)
         {
             item.Hp -= Mathf.Max(1, _stat.Attack - item.Defense);
         }
+        
     }
 
 

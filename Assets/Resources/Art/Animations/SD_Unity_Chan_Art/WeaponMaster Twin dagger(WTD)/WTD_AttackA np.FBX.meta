@@ -1511,7 +1511,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 1
+      - time: 0.29639888
         functionName: CorrectionClearEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
