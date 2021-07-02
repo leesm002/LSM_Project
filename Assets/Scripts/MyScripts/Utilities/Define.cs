@@ -24,6 +24,16 @@ public class Define
         Jumping,
         Posing
     }
+    public enum MonsterState
+    {
+        Idle,
+        Walk,
+        Attack,
+        GetHit,
+        Dizzy,
+        Defend,
+        Unknown
+    }
 
     public enum PlayerCombatState
     {
