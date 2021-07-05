@@ -11,7 +11,7 @@ public class MonsterController : MonoBehaviour
     private Stat stat;
     private float previousHp;
     private Define.MonsterState state = Define.MonsterState.Idle;
-    private Define.MonsterState preState = Define.MonsterState.Unknown;
+    private Define.MonsterState preState = Define.MonsterState.Idle;
 
     private float magLength;
     private Vector3 normRot;
@@ -21,7 +21,7 @@ public class MonsterController : MonoBehaviour
     private AnimatorStateInfo currentState;
     private AnimatorStateInfo previousState;
 
-    private void Awake()
+    private void Start()
     {
         //최초 위치 저장
         ResetPos = transform.position;
@@ -30,13 +30,14 @@ public class MonsterController : MonoBehaviour
 
         previousHp = stat.Hp;
 
+
         //** 애니메이션 관련 변수 초기화
         anim = GetComponent<Animator>();
         currentState = anim.GetCurrentAnimatorStateInfo(0);
         previousState = currentState;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         digitization();
 
@@ -59,8 +60,10 @@ public class MonsterController : MonoBehaviour
             case Define.MonsterState.Defend:
                 break;
             default:
+                detectPlayer(magLength);
                 break;
         }
+        
 
     }
 
@@ -141,6 +144,7 @@ public class MonsterController : MonoBehaviour
     //현재 체력과 이전 체력의 값이 다를 때
     private void CompareHp()
     {
+
         if (previousHp != stat.Hp)
         {
             previousHp = stat.Hp;
