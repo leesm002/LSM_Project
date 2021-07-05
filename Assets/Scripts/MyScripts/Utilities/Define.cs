@@ -32,6 +32,7 @@ public class Define
         GetHit,
         Dizzy,
         Defend,
+        Die,
         Unknown
     }
 

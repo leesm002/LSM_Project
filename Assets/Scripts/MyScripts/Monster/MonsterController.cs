@@ -8,8 +8,11 @@ public class MonsterController : MonoBehaviour
 
     private GameObject player;
     private Vector3 ResetPos;
-    private Stat stat;
+    private Stat mobStat;
+    private PlayerStat _stat;
     private float previousHp;
+    private bool isDizzy = false;
+    
     private Define.MonsterState state = Define.MonsterState.Idle;
     private Define.MonsterState preState = Define.MonsterState.Idle;
 
@@ -25,11 +28,12 @@ public class MonsterController : MonoBehaviour
     {
         //최초 위치 저장
         ResetPos = transform.position;
-        stat = gameObject.GetComponent<Stat>();
+        mobStat = gameObject.GetComponent<Stat>();
+        _stat = gameObject.GetComponent<PlayerStat>();
         player = GameObject.FindGameObjectWithTag("Player");
 
-        previousHp = stat.Hp;
-
+        previousHp = mobStat.Hp;
+        isDizzy = false;
 
         //** 애니메이션 관련 변수 초기화
         anim = GetComponent<Animator>();
@@ -40,6 +44,7 @@ public class MonsterController : MonoBehaviour
     private void Update()
     {
         digitization();
+        GetDizzy();
 
         switch (state)
         {
@@ -56,8 +61,11 @@ public class MonsterController : MonoBehaviour
                 OnGetAttack();
                 break;
             case Define.MonsterState.Dizzy:
+                OnDizzy();
                 break;
             case Define.MonsterState.Defend:
+                break;
+            case Define.MonsterState.Die:
                 break;
             default:
                 detectPlayer(magLength);
@@ -73,6 +81,7 @@ public class MonsterController : MonoBehaviour
         normRot = (transform.position - player.transform.position).normalized;
     }
 
+    #region 이동관련
     private void detectPlayer(float Len)
     {
         if (anim.name != "Idle")
@@ -109,11 +118,14 @@ public class MonsterController : MonoBehaviour
 
         if (Len < maxLength && Len > minLength)
         {
-            transform.position -= Rot * stat.MoveSpeed * Time.deltaTime;
+            transform.position -= Rot * mobStat.MoveSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Rot), 0.2f);
         }
     }
 
+    #endregion
+
+    #region 전투(공격&체력)관련
     private void AttackPlayer(float Len)
     {
         if (anim.name != "Attack01")
@@ -131,6 +143,31 @@ public class MonsterController : MonoBehaviour
 
     }
 
+    //공격 했을 때 이벤트
+    private void AttackEvent()
+    {
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("MobWeapon");
+
+        foreach (var item in obj)
+        {
+            if (item.activeInHierarchy)
+            {
+
+                Collider[] collider = Physics.OverlapBox(item.transform.position, item.transform.localScale, new Quaternion(0.3f, 0.3f, 0.3f, 0.3f));
+                foreach (Collider col in collider)
+                {
+                    if (col.tag == "Player")
+                    {
+                        PlayerStat _stat = col.GetComponentInChildren<PlayerStat>();
+                        //최소 데미지 1
+                        _stat.Hp -= Mathf.Max(1, mobStat.Attack - _stat.Defense);
+                    }
+                }
+
+            }
+        }
+    }
+
     //공격 이후 범위 내에 없을 때
     private void afterAttackEvent()
     {
@@ -145,9 +182,9 @@ public class MonsterController : MonoBehaviour
     private void CompareHp()
     {
 
-        if (previousHp != stat.Hp)
+        if (previousHp != mobStat.Hp)
         {
-            previousHp = stat.Hp;
+            previousHp = mobStat.Hp;
             preState = state;
             state = Define.MonsterState.GetHit;
             return;
@@ -168,4 +205,29 @@ public class MonsterController : MonoBehaviour
     {
         state = preState;
     }
+    #endregion
+
+    #region 전투(상태이상)관련
+    private void GetDizzy()
+    {
+        if (isDizzy)
+        {
+            preState = state;
+            state = Define.MonsterState.Dizzy;
+        }
+    }
+
+    private void OnDizzy()
+    {
+        if (anim.name != "Dizzy")
+            anim.Play("DIzzy");
+
+        //GetDizzyEvent
+
+    }
+    private void GetDizzyEvent()
+    {
+        Debug.Log("Dizzy");
+    }
+    #endregion
 }

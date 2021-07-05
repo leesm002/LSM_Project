@@ -9,6 +9,7 @@ TagManager:
   - TwoHand
   - Monster
   - NPC
+  - MobWeapon
   layers:
   - Default
   - TransparentFX
