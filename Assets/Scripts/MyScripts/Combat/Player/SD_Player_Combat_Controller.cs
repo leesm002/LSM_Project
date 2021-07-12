@@ -10,6 +10,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     private PlayerStat _stat;
     private Stack<Stat> monsterStats = new Stack<Stat>();
 
+    //죽음 관련
+    public bool isDie = false;
+
     //캐릭터 이동 관련
     private float f_speed = 5.0f;
     private float f_runSpeed = 7.0f;
@@ -47,6 +50,7 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         Managers.GetInputManager.KeyAction += mouseEvent;
     }
 
+    #region 애니메이션 업데이트
 
     void UpdateIdle() { anim.SetInteger("Condition", 0); }
     void UpdateWalking() { anim.SetInteger("Condition", 1); }
@@ -56,7 +60,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     void UpdateHitosasi() { anim.SetInteger("Condition", 5); }
     void UpdateDizzy() { anim.SetInteger("Condition", 6); }
     void UpdateSlide() { anim.SetInteger("Condition", 7); }
+    void UpdateDie() { anim.SetInteger("Condition", 8); }
 
+    #endregion
 
     void groundCharacter()
     {
@@ -66,6 +72,8 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     private void Update()
     {
+        checkDie();
+
         if (PlayerStateType != dump_PlayerStateType)
         {
             switch (PlayerStateType)
@@ -94,6 +102,9 @@ public class SD_Player_Combat_Controller : MonoBehaviour
                 case Define.PlayerCombatState.Slide:
                     UpdateSlide();
                     break;
+                case Define.PlayerCombatState.Die:
+                    UpdateDie();
+                    break;
                 default:
                     UpdateIdle();
                     break;
@@ -109,6 +120,12 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     #region KeyboardEvents
     void OnKeyboard()
     {
+        //죽으면 즉시 반환
+        if (isDie)
+        {
+            return;
+        }
+
         //기본 유휴상태
         PlayerStateType = Define.PlayerCombatState.Idle;
 
@@ -204,6 +221,11 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     #region MouseEvents
     void mouseEvent()
     {
+        //죽으면 즉시 반환
+        if (isDie)
+        {
+            return;
+        }
 
         //마우스 클릭 이벤트
         if (Input.GetMouseButton((int)Define.MouseButtonDown.MBD_LEFT) &&
@@ -233,6 +255,12 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     void LeftMouseButton()
     {
+        //죽으면 즉시 반환
+        if (isDie)
+        {
+            return;
+        }
+
         isOnLeftClicked = true;
 
         if (PlayerStateType != Define.PlayerCombatState.PrickAttack)
@@ -245,6 +273,12 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     void RightMouseButton()
     {
+        //죽으면 즉시 반환
+        if (isDie)
+        {
+            return;
+        }
+
         isOnRightClicked = true;
         if (PlayerStateType != Define.PlayerCombatState.ContinuousAttack)
         {
@@ -264,7 +298,6 @@ public class SD_Player_Combat_Controller : MonoBehaviour
         
     }
     #endregion
-
 
     #region AttackEnemyEvent
     public void NormalAttackEnemyEvent()
@@ -366,6 +399,21 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     {
         monsterStats.Clear();
     }
+    #endregion
+
+    #region 죽음
+
+    private void checkDie()
+    {
+        if ( _stat.Hp < 0 && 
+             !isDie )
+        {
+            PlayerStateType = Define.PlayerCombatState.Die;
+            isDie = true;
+        }
+
+    }
+
     #endregion
 
 }

@@ -45,7 +45,9 @@ public class Define
         ContinuousAttack,
         Hitosasi,
         Dizzy,
-        Slide
+        Slide,
+        Die,
+        Unknown
 
     }
 
