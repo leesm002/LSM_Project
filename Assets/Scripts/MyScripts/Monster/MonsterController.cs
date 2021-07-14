@@ -6,6 +6,13 @@ public class MonsterController : MonoBehaviour
 {
     private const float maxLength = 6.0f, minLength = 1.0f;
 
+    //시간 딜레이용 변수
+    private float fDestroyTime = 2.0f;
+    private float fTickTime;
+    private bool isDelayOK = false;
+    private bool isGetDelayEvent = false;
+
+
     private GameObject player;
     private Vector3 ResetPos;
     private Stat mobStat;
@@ -44,6 +51,14 @@ public class MonsterController : MonoBehaviour
     private void Update()
     {
         digitization();
+
+        CheckDie();
+
+        if (DelayDisappear(isGetDelayEvent))
+        {
+            Managers.Destroy(this);
+        }
+
         GetDizzy();
 
         switch (state)
@@ -66,6 +81,7 @@ public class MonsterController : MonoBehaviour
             case Define.MonsterState.Defend:
                 break;
             case Define.MonsterState.Die:
+                OnDie();
                 break;
             default:
                 detectPlayer(magLength);
@@ -126,13 +142,21 @@ public class MonsterController : MonoBehaviour
     #endregion
 
     #region 전투(공격&체력)관련
-    private void AttackPlayer(float Len)
+
+    //Player의 체력이 0이하일 때 행동을 멈추고 state를 Idle상태로 변경
+    private void CheckPlayerHp()
     {
         if (_stat.Hp < 0)
         {
             state = Define.MonsterState.Idle;
             return;
         }
+    }
+
+    //Player를 공격
+    private void AttackPlayer(float Len)
+    {
+        CheckPlayerHp();
 
         if (anim.name != "Attack01")
             anim.Play("Attack01");
@@ -147,41 +171,6 @@ public class MonsterController : MonoBehaviour
         }
 
 
-    }
-
-    //공격 했을 때 이벤트
-    private void AttackEvent()
-    {
-        GameObject[] obj = GameObject.FindGameObjectsWithTag("MobWeapon");
-
-        foreach (var item in obj)
-        {
-            if (item.activeInHierarchy)
-            {
-
-                Collider[] collider = Physics.OverlapBox(item.transform.position, item.transform.localScale, new Quaternion(0.3f, 0.3f, 0.3f, 0.3f));
-                foreach (Collider col in collider)
-                {
-                    if (col.tag == "Player")
-                    {
-                        PlayerStat _stat = col.GetComponentInChildren<PlayerStat>();
-                        //최소 데미지 1
-                        _stat.Hp -= Mathf.Max(1, mobStat.Attack - _stat.Defense);
-                    }
-                }
-
-            }
-        }
-    }
-
-    //공격 이후 범위 내에 없을 때
-    private void afterAttackEvent()
-    {
-        if (magLength < maxLength && magLength > minLength)
-        {
-            state = Define.MonsterState.Walk;
-            return;
-        }
     }
 
     //현재 체력과 이전 체력의 값이 다를 때
@@ -207,11 +196,48 @@ public class MonsterController : MonoBehaviour
 
     }
 
+    #region 이벤트 함수
+    //공격 했을 때 이벤트
+    private void AttackEvent()
+    {
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("MobWeapon");
+
+        foreach (var item in obj)
+        {
+            //활성화 되어있는 무기만 일시적으로 collider 부여해줌
+            if (item.activeInHierarchy)
+            {
+
+                Collider[] collider = Physics.OverlapBox(item.transform.position, item.transform.localScale, new Quaternion(0.3f, 0.3f, 0.3f, 0.3f));
+                foreach (Collider col in collider)
+                {
+                    if (col.tag == "Player")
+                    {
+                        PlayerStat _stat = col.GetComponentInChildren<PlayerStat>();
+                        //최소 데미지 1
+                        _stat.Hp -= Mathf.Max(1, mobStat.Attack - _stat.Defense);
+                    }
+                }
+
+            }
+        }
+    }
+    //공격 이후 범위 내에 없을 때
+    private void afterAttackEvent()
+    {
+        if (magLength < maxLength && magLength > minLength)
+        {
+            state = Define.MonsterState.Walk;
+            return;
+        }
+    }
     private void GetHitEvent()
     {
         state = preState;
     }
-    #endregion
+    #endregion 이벤트 함수
+
+    #endregion 전투(공격&체력)관련
 
     #region 전투(상태이상)관련
     private void GetDizzy()
@@ -231,9 +257,49 @@ public class MonsterController : MonoBehaviour
         //GetDizzyEvent
 
     }
+    #region 이벤트 함수
     private void GetDizzyEvent()
     {
         Debug.Log("Dizzy");
     }
-    #endregion
+    #endregion 이벤트 함수
+
+    #endregion 전투(상태이상)관련
+
+    #region 죽음관련
+    private void CheckDie()
+    {
+        if (mobStat.Hp < 0)
+            state = Define.MonsterState.Die;
+    }
+
+    private void OnDie()
+    {
+        if (anim.name != "Die")
+            anim.Play("Die");
+
+    }
+    
+    private bool DelayDisappear(bool DelayEvent)
+    {
+        if (DelayEvent)
+        {
+            fTickTime += Time.deltaTime;
+
+            if (fTickTime >= fDestroyTime)
+                isDelayOK = true;
+        }
+
+        return isDelayOK;
+    }
+
+    #region 이벤트 함수
+    private void DelayDisappearEvent()
+    {
+        isGetDelayEvent = true;
+    }
+    #endregion 이벤트 함수
+
+
+    #endregion 죽음관련
 }
