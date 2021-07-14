@@ -29,8 +29,8 @@ public class MonsterController : MonoBehaviour
         //최초 위치 저장
         ResetPos = transform.position;
         mobStat = gameObject.GetComponent<Stat>();
-        _stat = gameObject.GetComponent<PlayerStat>();
         player = GameObject.FindGameObjectWithTag("Player");
+        _stat = player.GetComponent<PlayerStat>();
 
         previousHp = mobStat.Hp;
         isDizzy = false;
@@ -128,6 +128,12 @@ public class MonsterController : MonoBehaviour
     #region 전투(공격&체력)관련
     private void AttackPlayer(float Len)
     {
+        if (_stat.Hp < 0)
+        {
+            state = Define.MonsterState.Idle;
+            return;
+        }
+
         if (anim.name != "Attack01")
             anim.Play("Attack01");
 
