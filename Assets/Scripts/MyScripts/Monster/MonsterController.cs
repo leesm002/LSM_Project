@@ -56,7 +56,7 @@ public class MonsterController : MonoBehaviour
 
         if (DelayDisappear(isGetDelayEvent))
         {
-            Managers.Destroy(this);
+            Managers.Destroy(transform.gameObject);
         }
 
         GetDizzy();
