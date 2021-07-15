@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace UnityChan
+namespace UnityEditor.Rendering.Universal.Toon
 {
 	public class CopyMaterialParameter : EditorWindow
 	{
