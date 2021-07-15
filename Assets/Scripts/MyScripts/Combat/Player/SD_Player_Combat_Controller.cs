@@ -12,6 +12,10 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     //죽음 관련
     public bool isDie = false;
+    private float fDestroyTime = 2.0f;
+    private float fTickTime;
+    private bool isDelayOK = false;
+    private bool isGetDelayEvent = false;
 
     //캐릭터 이동 관련
     private float f_speed = 5.0f;
@@ -73,6 +77,12 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     private void Update()
     {
         checkDie();
+
+        if (DelayDisappear(isGetDelayEvent))
+        {
+            //패배 UI 출력 후 화면 이동
+
+        }
 
         if (PlayerStateType != dump_PlayerStateType)
         {
@@ -414,7 +424,46 @@ public class SD_Player_Combat_Controller : MonoBehaviour
 
     }
 
-    #endregion
+    private bool DelayDisappear(bool DelayEvent)
+    {
+        if (DelayEvent)
+        {
+            fTickTime += Time.deltaTime;
+
+            if (fTickTime >= fDestroyTime)
+            {
+                isDelayOK = true;
+                fTickTime = 0;
+            }
+        }
+
+        return isDelayOK;
+    }
+
+    private bool DelayDisappear(bool DelayEvent, float fDelayTime)
+    {
+        if (DelayEvent)
+        {
+            fTickTime += Time.deltaTime;
+
+            if (fTickTime >= fDelayTime)
+            {
+                isDelayOK = true;
+                fTickTime = 0;
+            }
+        }
+
+        return isDelayOK;
+    }
+
+    #region 이벤트 함수
+    private void DelayDisappearEvent()
+    {
+        isGetDelayEvent = true;
+    }
+    #endregion 이벤트 함수
+
+    #endregion 죽음
 
 }
 
