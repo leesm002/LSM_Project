@@ -6,12 +6,14 @@ public class MonsterController : MonoBehaviour
 {
     private const float maxLength = 6.0f, minLength = 1.0f;
 
+    //중력 관련
+    private const float f_gravity = 9.8f;
+
     //시간 딜레이용 변수
     private float fDestroyTime = 2.0f;
     private float fTickTime;
     private bool isDelayOK = false;
     private bool isGetDelayEvent = false;
-
 
     private GameObject player;
     private Vector3 ResetPos;
@@ -33,6 +35,7 @@ public class MonsterController : MonoBehaviour
 
     private void Start()
     {
+
         //최초 위치 저장
         ResetPos = transform.position;
         mobStat = gameObject.GetComponent<Stat>();
@@ -87,7 +90,6 @@ public class MonsterController : MonoBehaviour
                 detectPlayer(magLength);
                 break;
         }
-        
 
     }
 

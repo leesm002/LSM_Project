@@ -10,6 +10,7 @@ TagManager:
   - Monster
   - NPC
   - MobWeapon
+  - Ground
   layers:
   - Default
   - TransparentFX
