@@ -11,7 +11,7 @@ public class SD_Player_Combat_Controller : MonoBehaviour
     private Stack<Stat> monsterStats = new Stack<Stat>();
 
     //죽음 관련
-    public bool isDie = false;
+    private bool isDie = false;
     private float fDestroyTime = 2.0f;
     private float fTickTime;
     private bool isDelayOK = false;
