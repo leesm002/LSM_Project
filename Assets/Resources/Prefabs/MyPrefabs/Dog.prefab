@@ -500,9 +500,10 @@ GameObject:
   m_Component:
   - component: {fileID: 68668500439762115}
   - component: {fileID: 68668500430711583}
-  - component: {fileID: 6468181525929718609}
   - component: {fileID: 2043757861338609834}
+  - component: {fileID: 5370491510535788200}
   - component: {fileID: 2043757861338609833}
+  - component: {fileID: 4178664938794236909}
   m_Layer: 0
   m_Name: Dog
   m_TagString: Monster
@@ -546,19 +547,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &6468181525929718609
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68668500440193187}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2043757861338609834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +565,22 @@ MonoBehaviour:
   _attack: 0
   _defense: 0
   _moveSpeed: 0
+--- !u!54 &5370491510535788200
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68668500440193187}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!114 &2043757861338609833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +593,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd38f9dd07f31c469eecb19d64c7e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &4178664938794236909
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68668500440193187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 0.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &68668500440193189
 GameObject:
   m_ObjectHideFlags: 0
@@ -2474,7 +2492,7 @@ PrefabInstance:
     - target: {fileID: 2314383671623504738, guid: 52b473a86d1ff8d4eb85bfe5e3b20821,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 1.676
       objectReference: {fileID: 0}
     - target: {fileID: 2314383671623504738, guid: 52b473a86d1ff8d4eb85bfe5e3b20821,
         type: 3}
@@ -2490,6 +2508,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7308152674545960879, guid: 52b473a86d1ff8d4eb85bfe5e3b20821,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52b473a86d1ff8d4eb85bfe5e3b20821, type: 3}

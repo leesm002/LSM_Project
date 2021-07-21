@@ -20,7 +20,7 @@ public class MobSpawn : MonoBehaviour
             dog[i] = Managers.GetResourceManager.Instantiate("MyPrefabs/Dog");
 
             dog[i].name = "dog" + i.ToString();
-            dog[i].transform.position = new Vector3(1 * ((i % (dogCount - 1)) - 1), 0f, 4f);
+            dog[i].transform.position = new Vector3(1 * ((i % (dogCount)) - 1), 0f, 4f);
             dog[i].transform.LookAt(player.transform);
             dog[i].transform.parent = transform;
         }
